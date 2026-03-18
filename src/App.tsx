@@ -1,20 +1,62 @@
 import { useEffect, useRef, useState } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-const fadeUp = {
+type FadeUpConfig = {
+  initial: { opacity: number; y: number };
+  whileInView: { opacity: number; y: number };
+  viewport: { once: boolean; amount: number };
+  transition: { duration: number; ease: [number, number, number, number] };
+};
+
+type Metric = {
+  value: string;
+  label: string;
+};
+
+type Feature = {
+  id: string;
+  title: string;
+  text: string;
+};
+
+type JourneyStep = {
+  step: string;
+  title: string;
+  text: string;
+};
+
+type Highlight = {
+  label: string;
+  title: string;
+  text?: string;
+  wide?: boolean;
+};
+
+type AmbientBlob = {
+  id: number;
+  size: number;
+  top: string;
+  left: string;
+  delay: number;
+};
+
+type MetricCardProps = Metric;
+
+const fadeUp: FadeUpConfig = {
   initial: { opacity: 0, y: 36 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, amount: 0.25 },
   transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
 };
 
-const metrics = [
+const metrics: Metric[] = [
   { value: "10", label: "Grades from playgroup to 10" },
   { value: "8", label: "Signature skill-building programs" },
   { value: "1", label: "Recognized among top city-wise CBSE schools" },
 ];
 
-const features = [
+const features: Feature[] = [
   {
     id: "01",
     title: "Strong academic foundation",
@@ -32,7 +74,7 @@ const features = [
   },
 ];
 
-const journey = [
+const journey: JourneyStep[] = [
   {
     step: "Stage 01",
     title: "Playgroup to Primary",
@@ -50,7 +92,7 @@ const journey = [
   },
 ];
 
-const highlights = [
+const highlights: Highlight[] = [
   {
     label: "Recognition",
     title: "Ranked No. 1 in Shimoga in 2022 among India's top city-wise CBSE schools.",
@@ -78,7 +120,7 @@ const highlights = [
   },
 ];
 
-const ambientBlobs = [
+const ambientBlobs: AmbientBlob[] = [
   { id: 1, size: 160, top: "12%", left: "10%", delay: 0.2 },
   { id: 2, size: 220, top: "18%", left: "78%", delay: 1.1 },
   { id: 3, size: 140, top: "54%", left: "72%", delay: 0.7 },
@@ -86,9 +128,9 @@ const ambientBlobs = [
   { id: 5, size: 120, top: "82%", left: "88%", delay: 0.4 },
 ];
 
-function useCountUp(target, duration = 1.4) {
-  const [value, setValue] = useState(0);
-  const [started, setStarted] = useState(false);
+function useCountUp(target: number, duration = 1.4): [number, React.Dispatch<React.SetStateAction<boolean>>] {
+  const [value, setValue] = useState<number>(0);
+  const [started, setStarted] = useState<boolean>(false);
 
   useEffect(() => {
     if (!started) {
@@ -96,10 +138,10 @@ function useCountUp(target, duration = 1.4) {
     }
 
     let frameId = 0;
-    let start;
+    let start: number | undefined;
 
-    const animate = (time) => {
-      if (!start) {
+    const animate = (time: number) => {
+      if (start === undefined) {
         start = time;
       }
 
@@ -120,7 +162,7 @@ function useCountUp(target, duration = 1.4) {
   return [value, setStarted];
 }
 
-function MetricCard({ value, label }) {
+function MetricCard({ value, label }: MetricCardProps) {
   const [count, startCount] = useCountUp(Number(value));
 
   return (
@@ -153,13 +195,13 @@ function AmbientScene() {
 }
 
 function HeroTiltCard() {
-  const cardRef = useRef(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [12, -12]), { stiffness: 140, damping: 18 });
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-14, 14]), { stiffness: 140, damping: 18 });
 
-  const handleMove = (event) => {
+  const handleMove = (event: ReactMouseEvent<HTMLDivElement>) => {
     const rect = cardRef.current?.getBoundingClientRect();
     if (!rect) {
       return;
@@ -227,7 +269,7 @@ function HeroTiltCard() {
 }
 
 function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
     document.body.classList.toggle("menu-open", menuOpen);
