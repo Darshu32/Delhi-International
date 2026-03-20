@@ -133,9 +133,9 @@ export default function SiteLayout() {
       <AnimatePresence>
         {popupOpen && (
           <div className="fixed inset-0 z-60 flex items-end md:items-center justify-center p-0 md:p-6 bg-black/50 backdrop-blur-sm animate-fade-in" onClick={() => setPopupOpen(false)}>
-            <div className="relative w-full md:max-w-3xl max-h-[92dvh] overflow-y-auto bg-white rounded-t-3xl md:rounded-3xl shadow-elevated animate-slide-up md:animate-slide-up-center" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full md:max-w-3xl max-h-[92dvh] overflow-hidden bg-white rounded-t-3xl md:rounded-3xl shadow-elevated animate-slide-up md:animate-slide-up-center" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
               <button className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/5 grid place-items-center text-text-secondary font-bold text-sm hover:bg-black/10 active:scale-90 transition-all" onClick={() => setPopupOpen(false)}>&times;</button>
-              <div className="grid md:grid-cols-2">
+              <div className="grid md:grid-cols-2 max-h-[92dvh] overflow-y-auto">
                 <div className="p-6 md:p-8 bg-navy text-white rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none relative overflow-hidden">
                   <div className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-accent/10 blur-3xl" />
                   <p className="text-[11px] font-bold tracking-widest uppercase text-accent mb-3">Admissions 2026-27</p>
@@ -182,28 +182,15 @@ export default function SiteLayout() {
                       </label>
                       <label className="flex flex-col gap-1">
                         <span className="text-xs font-bold text-navy">Grade Applying For <span className="text-red-500">*</span></span>
-                        <select name="grade" value={formData.grade} onChange={handleInput} onBlur={handleBlur} className={inputCls("grade")}>
+                        <select name="grade" value={formData.grade} onChange={handleInput} onBlur={handleBlur} className={inputCls("grade")} size={1}>
                           <option value="">Select grade</option>
-                          <optgroup label="Early Years">
-                            <option value="Playgroup">Playgroup</option>
-                            <option value="Nursery">Nursery</option>
-                            <option value="LKG">LKG</option>
-                            <option value="UKG">UKG</option>
-                          </optgroup>
-                          <optgroup label="Primary School">
-                            <option value="Grade 1">Grade 1</option>
-                            <option value="Grade 2">Grade 2</option>
-                            <option value="Grade 3">Grade 3</option>
-                            <option value="Grade 4">Grade 4</option>
-                            <option value="Grade 5">Grade 5</option>
-                          </optgroup>
-                          <optgroup label="Middle & High School">
-                            <option value="Grade 6">Grade 6</option>
-                            <option value="Grade 7">Grade 7</option>
-                            <option value="Grade 8">Grade 8</option>
-                            <option value="Grade 9">Grade 9</option>
-                            <option value="Grade 10">Grade 10</option>
-                          </optgroup>
+                          <option value="Playgroup">Playgroup</option>
+                          <option value="Nursery">Nursery</option>
+                          <option value="LKG">LKG</option>
+                          <option value="UKG">UKG</option>
+                          <option value="Grade 1-5">Grade 1 – 5 (Primary)</option>
+                          <option value="Grade 6-8">Grade 6 – 8 (Middle School)</option>
+                          <option value="Grade 9-10">Grade 9 – 10 (High School)</option>
                         </select>
                         {errors.grade && touched.grade && <span className="text-[11px] text-red-500 font-medium">{errors.grade}</span>}
                       </label>
