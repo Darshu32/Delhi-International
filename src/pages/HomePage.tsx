@@ -34,7 +34,7 @@ export default function HomePage() {
     <main>
       {/* Highlights Ticker */}
       <div className="bg-accent overflow-hidden">
-        <div className="flex animate-marquee whitespace-nowrap py-2.5">
+        <div className="flex animate-marquee-fast md:animate-marquee whitespace-nowrap py-2.5">
           {[...Array(3)].map((_, s) => (
             <div key={s} className="flex items-center gap-6 px-3">
               {[
@@ -108,13 +108,15 @@ export default function HomePage() {
             <div className="relative h-56 sm:h-72 lg:h-full w-full overflow-hidden bg-navy flex items-center">
               <video
                 className="w-full h-full object-contain"
-                src="./1774004937697949.mov"
                 autoPlay
                 muted
                 loop
                 playsInline
+                preload="auto"
                 poster="./student%20.jpeg"
-              />
+              >
+                <source src="./hero-video.mp4" type="video/mp4" />
+              </video>
               {/* Gradient overlay for blending into text on desktop */}
               <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/30 to-transparent pointer-events-none hidden lg:block" />
               <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent pointer-events-none lg:hidden" />
