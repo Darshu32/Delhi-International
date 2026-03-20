@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { admissionsSteps } from "../siteContent";
+import { useToast } from "../components/Toast";
 
 const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.12 }, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } };
 
@@ -23,6 +24,7 @@ const faqs = [
 ];
 
 export default function AdmissionsPage() {
+  const { toast } = useToast();
   const [formData, setFormData] = useState({ studentName: "", parentName: "", phone: "", email: "", grade: "", city: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -66,7 +68,7 @@ export default function AdmissionsPage() {
     const errs = validate(formData);
     setErrors(errs);
     setTouched({ studentName: true, parentName: true, phone: true, email: true, grade: true, city: true, message: true });
-    if (Object.keys(errs).length > 0) return;
+    if (Object.keys(errs).length > 0) { toast(`Please fix ${Object.keys(errs).length} error(s) in the form`, "error"); return; }
     const type = activeTab === "visit" ? "Campus Visit Request" : "Admission Enquiry";
     const icon = activeTab === "visit" ? "🏫" : "📋";
     let msg = `${icon} *New ${type}*\n━━━━━━━━━━━━━━━━━━\n\n👨‍🎓 *Student:* ${formData.studentName.trim()}\n👤 *Parent:* ${formData.parentName.trim()}\n📞 *Phone:* ${formData.phone.trim()}\n🎓 *Grade:* ${formData.grade}\n📍 *City:* ${formData.city.trim()}`;
@@ -74,6 +76,7 @@ export default function AdmissionsPage() {
     if (formData.message) msg += `\n💬 *Message:* ${formData.message.trim()}`;
     msg += `\n\n_Sent from Delhi International School website_`;
     window.open(`https://wa.me/919448220170?text=${encodeURIComponent(msg)}`, "_blank");
+    toast(activeTab === "visit" ? "Visit request sent! Complete on WhatsApp" : "Enquiry sent! Complete the message on WhatsApp", "success");
     setSubmitted(true);
   };
 
@@ -109,7 +112,7 @@ export default function AdmissionsPage() {
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
                 Enquire Now
               </a>
-              <a href="tel:9448220170" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 text-white font-bold text-sm border border-white/10 hover:bg-white/15 active:scale-[0.97] transition-all">
+              <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 text-white font-bold text-sm border border-white/10 hover:bg-white/15 active:scale-[0.97] transition-all">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                 Call 9448220170
               </a>
@@ -386,7 +389,7 @@ export default function AdmissionsPage() {
             <h2 className="font-display text-xl md:text-2xl font-bold leading-tight mb-3">Still have questions? Let's talk.</h2>
             <p className="text-sm text-white/50 mb-6 max-w-lg mx-auto">Our admissions team is happy to help you with any questions about the school, curriculum, fees, or the admission process.</p>
             <div className="flex flex-wrap justify-center gap-3">
-              <a href="tel:9448220170" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all">
+              <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                 Call 9448220170
               </a>

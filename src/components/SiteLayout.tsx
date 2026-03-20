@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { useToast } from "./Toast";
 
 const navLinks = [
   { to: "/about", label: "About" },
@@ -13,6 +14,7 @@ const navLinks = [
 ];
 
 export default function SiteLayout() {
+  const { toast } = useToast();
   const [menuOpen, setMenuOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -63,9 +65,10 @@ export default function SiteLayout() {
     const errs = validate(formData);
     setErrors(errs);
     setTouched({ studentName: true, parentName: true, phone: true, grade: true, city: true });
-    if (Object.keys(errs).length > 0) return;
+    if (Object.keys(errs).length > 0) { toast(`Please fix ${Object.keys(errs).length} error(s) in the form`, "error"); return; }
     const msg = `📋 *New Admission Enquiry*\n━━━━━━━━━━━━━━━━━━\n\n👨‍🎓 *Student:* ${formData.studentName.trim()}\n👤 *Parent:* ${formData.parentName.trim()}\n📞 *Phone:* ${formData.phone.trim()}\n🎓 *Grade:* ${formData.grade}\n📍 *City:* ${formData.city.trim()}\n\n_Sent from Delhi International School website_`;
     window.open(`https://wa.me/919448220170?text=${encodeURIComponent(msg)}`, "_blank");
+    toast("Enquiry sent! Complete the message on WhatsApp", "success");
     setSubmitted(true);
   };
   const inputCls = (name: string) => `w-full min-h-11 px-3.5 rounded-xl border ${errors[name] && touched[name] ? "border-red-400 bg-red-50/50 focus:border-red-500 focus:ring-red-200/50" : "border-border bg-surface-dim focus:border-accent focus:ring-accent/20"} text-text-primary text-sm outline-none focus:ring-2 transition-all placeholder:text-text-muted/50`;
@@ -100,7 +103,7 @@ export default function SiteLayout() {
                 {link.label}
               </NavLink>
             ))}
-            <a href="tel:9448220170" className="ml-2 px-5 py-2.5 rounded-full bg-accent text-navy text-[13px] font-extrabold hover:bg-accent-light active:scale-95 transition-all shadow-glow">Call Now</a>
+            <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="ml-2 px-5 py-2.5 rounded-full bg-accent text-navy text-[13px] font-extrabold hover:bg-accent-light active:scale-95 transition-all shadow-glow">Call Now</a>
           </nav>
 
           <button className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px] rounded-lg border border-white/10 bg-white/5 active:bg-white/10 transition-colors" aria-expanded={menuOpen} onClick={() => setMenuOpen((o) => !o)}>
@@ -247,6 +250,7 @@ export default function SiteLayout() {
                 href="https://www.google.com/maps/search/Delhi+International+School+Gurupura+Shimoga"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => toast("Opening Google Maps...", "info")}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all w-fit"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>

@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { admissionsSteps, galleryImages, programs, stats } from "../siteContent";
+import { useToast } from "../components/Toast";
 
 const HeroScene = lazy(() => import("../HeroScene"));
 
@@ -15,6 +16,7 @@ const statColors = ["from-amber-500 to-orange-500", "from-emerald-500 to-green-5
 const programIconBg: Record<string, string> = { award: "from-amber-400 to-orange-500", play: "from-blue-400 to-indigo-600", campus: "from-emerald-400 to-green-600" };
 
 export default function HomePage() {
+  const { toast } = useToast();
   return (
     <main>
       {/* HERO */}
@@ -207,8 +209,8 @@ export default function HomePage() {
             <p className="text-sm md:text-base text-white/50 max-w-2xl mx-auto leading-relaxed">Families can schedule a visit, meet the team, and complete registration with guidance from the school admissions office.</p>
           </motion.div>
           <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12" {...fadeUp}>
-            <a href="tel:9448220170" className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light transition-all">Call 9448220170</a>
-            <a href="mailto:admissions@delhiinternationalschool.edu" className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-white/8 text-white font-bold text-sm border border-white/15 hover:bg-white/12 transition-all">Request Information</a>
+            <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light transition-all">Call 9448220170</a>
+            <a href="mailto:admissions@delhiinternationalschool.edu" onClick={() => toast("Opening email client...", "info")} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-white/8 text-white font-bold text-sm border border-white/15 hover:bg-white/12 transition-all">Request Information</a>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-4">
             {admissionsSteps.map((step, i) => (
