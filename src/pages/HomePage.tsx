@@ -81,9 +81,9 @@ export default function HomePage() {
 
           {/* Video — right side, edge-to-edge, aligned with text top */}
           <motion.div className="relative lg:flex-1 lg:self-stretch" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.1 }}>
-            <div className="relative h-64 sm:h-80 lg:h-full w-full overflow-hidden flex items-start">
+            <div className="relative h-56 sm:h-72 lg:h-full w-full overflow-hidden bg-navy flex items-center">
               <video
-                className="w-full lg:h-full object-contain lg:object-cover lg:object-top"
+                className="w-full h-full object-contain"
                 src="./1774004937697949.mov"
                 autoPlay
                 muted
