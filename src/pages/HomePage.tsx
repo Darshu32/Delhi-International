@@ -83,7 +83,7 @@ export default function HomePage() {
           <motion.div className="relative lg:flex-1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.1 }}>
             <div className="relative h-64 sm:h-80 lg:h-full w-full overflow-hidden">
               <video
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 src="./1774004937697949.mov"
                 autoPlay
                 muted
