@@ -37,9 +37,9 @@ export default function HomePage() {
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-green/5 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4 pointer-events-none" />
 
-        <div className="relative flex flex-col-reverse lg:flex-row lg:items-stretch min-h-[auto] lg:min-h-[540px] xl:min-h-[600px]">
+        <div className="relative flex flex-col-reverse lg:flex-row lg:items-start">
           {/* Text — left side */}
-          <motion.div className="flex flex-col justify-center gap-5 px-4 md:px-6 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:pr-10 py-10 md:py-14 lg:py-20 lg:w-[48%] xl:w-[45%] shrink-0" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+          <motion.div className="flex flex-col gap-5 px-4 md:px-6 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:pr-10 py-10 md:py-14 lg:py-16 lg:w-[48%] xl:w-[45%] shrink-0" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <motion.div className="inline-flex items-center self-start gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}>
               <span className="w-2 h-2 rounded-full bg-green animate-pulse" />
               <span className="text-[11px] font-bold text-accent tracking-wide uppercase">Admissions Open 2026-27</span>
@@ -79,11 +79,11 @@ export default function HomePage() {
             </div>
           </motion.div>
 
-          {/* Video — right side, edge-to-edge */}
-          <motion.div className="relative lg:flex-1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.1 }}>
-            <div className="relative h-64 sm:h-80 lg:h-full w-full overflow-hidden">
+          {/* Video — right side, edge-to-edge, aligned with text top */}
+          <motion.div className="relative lg:flex-1 lg:self-stretch" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.1 }}>
+            <div className="relative h-64 sm:h-80 lg:h-full w-full overflow-hidden flex items-start">
               <video
-                className="w-full h-full object-contain"
+                className="w-full lg:h-full object-contain lg:object-cover lg:object-top"
                 src="./1774004937697949.mov"
                 autoPlay
                 muted
