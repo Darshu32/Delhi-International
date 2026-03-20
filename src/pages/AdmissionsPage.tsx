@@ -68,9 +68,11 @@ export default function AdmissionsPage() {
     setTouched({ studentName: true, parentName: true, phone: true, email: true, grade: true, city: true, message: true });
     if (Object.keys(errs).length > 0) return;
     const type = activeTab === "visit" ? "Campus Visit Request" : "Admission Enquiry";
-    let msg = `*New ${type}*\n\n*Student Name:* ${formData.studentName.trim()}\n*Parent Name:* ${formData.parentName.trim()}\n*Phone:* ${formData.phone.trim()}\n*Grade:* ${formData.grade}\n*City:* ${formData.city.trim()}`;
-    if (formData.email) msg += `\n*Email:* ${formData.email.trim()}`;
-    if (formData.message) msg += `\n*Message:* ${formData.message.trim()}`;
+    const icon = activeTab === "visit" ? "🏫" : "📋";
+    let msg = `${icon} *New ${type}*\n━━━━━━━━━━━━━━━━━━\n\n👨‍🎓 *Student:* ${formData.studentName.trim()}\n👤 *Parent:* ${formData.parentName.trim()}\n📞 *Phone:* ${formData.phone.trim()}\n🎓 *Grade:* ${formData.grade}\n📍 *City:* ${formData.city.trim()}`;
+    if (formData.email) msg += `\n📧 *Email:* ${formData.email.trim()}`;
+    if (formData.message) msg += `\n💬 *Message:* ${formData.message.trim()}`;
+    msg += `\n\n_Sent from Delhi International School website_`;
     window.open(`https://wa.me/919448220170?text=${encodeURIComponent(msg)}`, "_blank");
     setSubmitted(true);
   };

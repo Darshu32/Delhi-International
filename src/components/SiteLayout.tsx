@@ -64,7 +64,7 @@ export default function SiteLayout() {
     setErrors(errs);
     setTouched({ studentName: true, parentName: true, phone: true, grade: true, city: true });
     if (Object.keys(errs).length > 0) return;
-    const msg = `*New Admission Enquiry*\n\n*Student Name:* ${formData.studentName.trim()}\n*Parent Name:* ${formData.parentName.trim()}\n*Phone:* ${formData.phone.trim()}\n*Grade:* ${formData.grade}\n*City:* ${formData.city.trim()}`;
+    const msg = `📋 *New Admission Enquiry*\n━━━━━━━━━━━━━━━━━━\n\n👨‍🎓 *Student:* ${formData.studentName.trim()}\n👤 *Parent:* ${formData.parentName.trim()}\n📞 *Phone:* ${formData.phone.trim()}\n🎓 *Grade:* ${formData.grade}\n📍 *City:* ${formData.city.trim()}\n\n_Sent from Delhi International School website_`;
     window.open(`https://wa.me/919448220170?text=${encodeURIComponent(msg)}`, "_blank");
     setSubmitted(true);
   };
