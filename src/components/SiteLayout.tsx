@@ -18,6 +18,8 @@ export default function SiteLayout() {
   const [submitted, setSubmitted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [formData, setFormData] = useState({ studentName: "", parentName: "", phone: "", grade: "", city: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const location = useLocation();
 
   useEffect(() => { document.body.classList.toggle("menu-open", menuOpen); return () => document.body.classList.remove("menu-open"); }, [menuOpen]);
@@ -26,13 +28,47 @@ export default function SiteLayout() {
   useEffect(() => { const fn = () => setScrolled(window.scrollY > 20); window.addEventListener("scroll", fn, { passive: true }); return () => window.removeEventListener("scroll", fn); }, []);
   useEffect(() => { const t = window.setTimeout(() => { setSubmitted(false); setPopupOpen(true); }, 800); return () => window.clearTimeout(t); }, []);
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => { setFormData((c) => ({ ...c, [e.target.name]: e.target.value })); };
+  const validate = (data: typeof formData) => {
+    const errs: Record<string, string> = {};
+    if (!data.studentName.trim() || data.studentName.trim().length < 2) errs.studentName = "Enter student's full name";
+    if (!data.parentName.trim() || data.parentName.trim().length < 2) errs.parentName = "Enter parent's full name";
+    if (!data.phone.trim()) errs.phone = "Phone number is required";
+    else if (!/^[6-9]\d{9}$/.test(data.phone.replace(/[\s\-+91]/g, ""))) errs.phone = "Enter a valid 10-digit mobile number";
+    if (!data.grade) errs.grade = "Please select a grade";
+    if (!data.city.trim()) errs.city = "City is required";
+    return errs;
+  };
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((c) => ({ ...c, [name]: value }));
+    if (touched[name]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        const updated = { ...formData, [name]: value };
+        const fieldErr = validate(updated)[name];
+        if (fieldErr) next[name] = fieldErr; else delete next[name];
+        return next;
+      });
+    }
+  };
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name } = e.target;
+    setTouched((t) => ({ ...t, [name]: true }));
+    const fieldErr = validate(formData)[name];
+    setErrors((prev) => { const next = { ...prev }; if (fieldErr) next[name] = fieldErr; else delete next[name]; return next; });
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `*New Admission Enquiry*%0A%0A*Student Name:* ${formData.studentName}%0A*Parent Name:* ${formData.parentName}%0A*Phone:* ${formData.phone}%0A*Grade:* ${formData.grade}%0A*City:* ${formData.city}`;
+    const errs = validate(formData);
+    setErrors(errs);
+    setTouched({ studentName: true, parentName: true, phone: true, grade: true, city: true });
+    if (Object.keys(errs).length > 0) return;
+    const msg = `*New Admission Enquiry*%0A%0A*Student Name:* ${formData.studentName.trim()}%0A*Parent Name:* ${formData.parentName.trim()}%0A*Phone:* ${formData.phone.trim()}%0A*Grade:* ${formData.grade}%0A*City:* ${formData.city.trim()}`;
     window.open(`https://wa.me/919448220170?text=${msg}`, "_blank");
     setSubmitted(true);
   };
+  const inputCls = (name: string) => `w-full min-h-11 px-3.5 rounded-xl border ${errors[name] && touched[name] ? "border-red-400 bg-red-50/50 focus:border-red-500 focus:ring-red-200/50" : "border-border bg-surface-dim focus:border-accent focus:ring-accent/20"} text-text-primary text-sm outline-none focus:ring-2 transition-all placeholder:text-text-muted/50`;
 
   return (
     <div className="min-h-dvh flex flex-col bg-white font-sans text-text-primary">
@@ -125,28 +161,62 @@ export default function SiteLayout() {
                       </div>
                     </div>
                   ) : (
-                    <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-                      {[
-                        { label: "Student Name", name: "studentName", ph: "Enter student name", ac: "name" },
-                        { label: "Parent Name", name: "parentName", ph: "Enter parent name", ac: "name" },
-                        { label: "Phone Number", name: "phone", ph: "Enter phone number", ac: "tel", im: "tel" as const },
-                      ].map((f) => (
-                        <label key={f.name} className="flex flex-col gap-1">
-                          <span className="text-xs font-bold text-navy">{f.label}</span>
-                          <input name={f.name} value={formData[f.name as keyof typeof formData]} onChange={handleInput} placeholder={f.ph} autoComplete={f.ac} inputMode={f.im} required className="w-full min-h-11 px-3.5 rounded-xl border border-border bg-surface-dim text-text-primary text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all placeholder:text-text-muted/50" />
-                        </label>
-                      ))}
+                    <form className="flex flex-col gap-3" onSubmit={handleSubmit} noValidate>
                       <label className="flex flex-col gap-1">
-                        <span className="text-xs font-bold text-navy">Grade Applying For</span>
-                        <select name="grade" value={formData.grade} onChange={handleInput} required className="w-full min-h-11 px-3.5 rounded-xl border border-border bg-surface-dim text-text-primary text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all">
-                          <option value="">Select grade</option><option value="Playgroup">Playgroup</option><option value="Kindergarten">Kindergarten</option><option value="Primary">Primary</option><option value="Middle School">Middle School</option><option value="High School">High School</option>
+                        <span className="text-xs font-bold text-navy">Student Name <span className="text-red-500">*</span></span>
+                        <input name="studentName" value={formData.studentName} onChange={handleInput} onBlur={handleBlur} placeholder="Enter student's full name" autoComplete="name" className={inputCls("studentName")} />
+                        {errors.studentName && touched.studentName && <span className="text-[11px] text-red-500 font-medium">{errors.studentName}</span>}
+                      </label>
+                      <label className="flex flex-col gap-1">
+                        <span className="text-xs font-bold text-navy">Parent / Guardian Name <span className="text-red-500">*</span></span>
+                        <input name="parentName" value={formData.parentName} onChange={handleInput} onBlur={handleBlur} placeholder="Enter parent's full name" autoComplete="name" className={inputCls("parentName")} />
+                        {errors.parentName && touched.parentName && <span className="text-[11px] text-red-500 font-medium">{errors.parentName}</span>}
+                      </label>
+                      <label className="flex flex-col gap-1">
+                        <span className="text-xs font-bold text-navy">Phone Number <span className="text-red-500">*</span></span>
+                        <div className="flex">
+                          <span className="flex items-center justify-center min-h-11 px-3 rounded-l-xl border border-r-0 border-border bg-surface-muted text-text-secondary text-sm font-semibold select-none">+91</span>
+                          <input name="phone" value={formData.phone} onChange={handleInput} onBlur={handleBlur} placeholder="98765 43210" autoComplete="tel" inputMode="tel" maxLength={10} className={`${inputCls("phone")} rounded-l-none`} />
+                        </div>
+                        {errors.phone && touched.phone && <span className="text-[11px] text-red-500 font-medium">{errors.phone}</span>}
+                      </label>
+                      <label className="flex flex-col gap-1">
+                        <span className="text-xs font-bold text-navy">Grade Applying For <span className="text-red-500">*</span></span>
+                        <select name="grade" value={formData.grade} onChange={handleInput} onBlur={handleBlur} className={inputCls("grade")}>
+                          <option value="">Select grade</option>
+                          <optgroup label="Early Years">
+                            <option value="Playgroup">Playgroup</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="LKG">LKG</option>
+                            <option value="UKG">UKG</option>
+                          </optgroup>
+                          <optgroup label="Primary School">
+                            <option value="Grade 1">Grade 1</option>
+                            <option value="Grade 2">Grade 2</option>
+                            <option value="Grade 3">Grade 3</option>
+                            <option value="Grade 4">Grade 4</option>
+                            <option value="Grade 5">Grade 5</option>
+                          </optgroup>
+                          <optgroup label="Middle & High School">
+                            <option value="Grade 6">Grade 6</option>
+                            <option value="Grade 7">Grade 7</option>
+                            <option value="Grade 8">Grade 8</option>
+                            <option value="Grade 9">Grade 9</option>
+                            <option value="Grade 10">Grade 10</option>
+                          </optgroup>
                         </select>
+                        {errors.grade && touched.grade && <span className="text-[11px] text-red-500 font-medium">{errors.grade}</span>}
                       </label>
                       <label className="flex flex-col gap-1">
-                        <span className="text-xs font-bold text-navy">City</span>
-                        <input name="city" value={formData.city} onChange={handleInput} placeholder="Enter city" autoComplete="address-level2" required className="w-full min-h-11 px-3.5 rounded-xl border border-border bg-surface-dim text-text-primary text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all placeholder:text-text-muted/50" />
+                        <span className="text-xs font-bold text-navy">City <span className="text-red-500">*</span></span>
+                        <input name="city" value={formData.city} onChange={handleInput} onBlur={handleBlur} placeholder="Enter your city" autoComplete="address-level2" className={inputCls("city")} />
+                        {errors.city && touched.city && <span className="text-[11px] text-red-500 font-medium">{errors.city}</span>}
                       </label>
-                      <button type="submit" className="w-full min-h-12 mt-1 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.98] transition-all">Request a Callback</button>
+                      <button type="submit" className="w-full min-h-12 mt-1 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Send via WhatsApp
+                      </button>
+                      <p className="text-[10px] text-text-muted text-center">Your details are sent securely via WhatsApp. We'll call you back within 24 hours.</p>
                     </form>
                   )}
                 </div>
