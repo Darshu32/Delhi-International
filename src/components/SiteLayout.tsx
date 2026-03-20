@@ -153,6 +153,61 @@ export default function SiteLayout() {
 
       <Outlet />
 
+      {/* Map Section */}
+      <section className="bg-navy-light border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-14">
+          <div className="grid lg:grid-cols-5 gap-6 items-stretch">
+            <div className="lg:col-span-2 flex flex-col justify-center">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-[11px] font-bold text-accent uppercase tracking-wider border border-accent/20 mb-4 w-fit">Find Us</span>
+              <h2 className="font-display text-xl md:text-2xl font-bold text-white leading-tight mb-3">Visit Our Campus</h2>
+              <p className="text-sm text-white/50 leading-relaxed mb-5">Located on Holehonnur Road, Gurupura — easily accessible from all parts of Shimoga. Come see our future-ready campus in person.</p>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-start gap-3">
+                  <span className="w-8 h-8 shrink-0 rounded-full bg-accent/15 grid place-items-center mt-0.5">
+                    <svg className="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                  </span>
+                  <div>
+                    <p className="text-xs text-white/40 font-medium">Address</p>
+                    <p className="text-sm font-semibold text-white/80">Holehonnur Road, Gurupura, Shimoga, Karnataka</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="w-8 h-8 shrink-0 rounded-full bg-accent/15 grid place-items-center mt-0.5">
+                    <svg className="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  </span>
+                  <div>
+                    <p className="text-xs text-white/40 font-medium">Office Hours</p>
+                    <p className="text-sm font-semibold text-white/80">Mon – Sat, 9:00 AM – 4:00 PM</p>
+                  </div>
+                </div>
+              </div>
+              <a
+                href="https://www.google.com/maps/search/Delhi+International+School+Gurupura+Shimoga"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all w-fit"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                Get Directions
+              </a>
+            </div>
+            <div className="lg:col-span-3 rounded-2xl overflow-hidden border border-white/10 shadow-elevated min-h-[300px] md:min-h-[380px]">
+              <iframe
+                title="Delhi International School Location"
+                src="https://maps.google.com/maps?q=Delhi+International+School+Gurupura+Shimoga+Karnataka&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0, minHeight: "300px" }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full h-full"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="mt-auto bg-navy">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-14 pb-28 md:pb-14">
@@ -162,7 +217,7 @@ export default function SiteLayout() {
               <h2 className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-white leading-tight max-w-lg">Quality CBSE learning with character, confidence, and joy.</h2>
             </div>
             <div className="lg:text-right flex flex-col gap-1.5 text-sm text-white/40">
-              <p>Holehonnur Road, Gurupura, Shimoga</p>
+              <a href="https://www.google.com/maps/search/Delhi+International+School+Gurupura+Shimoga" target="_blank" rel="noopener noreferrer" className="hover:text-white/60 transition-colors">Holehonnur Road, Gurupura, Shimoga</a>
               <a href="tel:9448220170" className="text-accent hover:text-accent-light transition-colors font-semibold">+91 9448220170</a>
             </div>
           </div>
