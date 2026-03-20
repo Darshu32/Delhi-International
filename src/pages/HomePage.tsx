@@ -91,27 +91,9 @@ export default function HomePage() {
                 playsInline
                 poster="./student%20.jpeg"
               />
-              {/* Gradient overlays for blending */}
-              <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/40 to-transparent pointer-events-none hidden lg:block" />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-transparent pointer-events-none lg:hidden" />
-              {/* Floating badges */}
-              <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 z-10 lg:bottom-6 lg:left-6">
-                <span className="px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-md text-[11px] font-bold text-white border border-white/15">CBSE Affiliated</span>
-                <span className="px-3 py-1.5 rounded-full bg-accent/20 backdrop-blur-md text-[11px] font-bold text-accent border border-accent/20">Ranked #1 Shimoga</span>
-              </div>
-              {/* Floating stat cards */}
-              <motion.div className="absolute top-4 left-4 lg:top-6 lg:left-6 z-20 px-3.5 py-2.5 rounded-2xl bg-navy-card/90 backdrop-blur-xl border border-white/10 shadow-elevated animate-float-slow">
-                <span className="block text-[10px] text-white/50 font-medium uppercase tracking-wider">Students</span>
-                <strong className="block text-xl font-extrabold text-white">3,400+</strong>
-                <span className="flex items-center gap-1 text-[10px] text-green font-semibold">
-                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" /></svg>
-                  Growing yearly
-                </span>
-              </motion.div>
-              <motion.div className="absolute bottom-14 right-4 lg:bottom-16 lg:right-6 z-20 px-3.5 py-2.5 rounded-2xl bg-navy-card/90 backdrop-blur-xl border border-white/10 shadow-elevated animate-float">
-                <span className="block text-[10px] text-white/50 font-medium uppercase tracking-wider">Experience</span>
-                <strong className="block text-xl font-extrabold text-accent">10+ yrs</strong>
-              </motion.div>
+              {/* Gradient overlay for blending into text on desktop */}
+              <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/30 to-transparent pointer-events-none hidden lg:block" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent pointer-events-none lg:hidden" />
             </div>
           </motion.div>
         </div>
