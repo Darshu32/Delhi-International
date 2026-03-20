@@ -35,7 +35,7 @@ export default function AdmissionsPage() {
     if (!data.studentName.trim() || data.studentName.trim().length < 2) errs.studentName = "Enter student's full name";
     if (!data.parentName.trim() || data.parentName.trim().length < 2) errs.parentName = "Enter parent's full name";
     if (!data.phone.trim()) errs.phone = "Phone number is required";
-    else if (!/^[6-9]\d{9}$/.test(data.phone.replace(/[\s\-+91]/g, ""))) errs.phone = "Enter a valid 10-digit mobile number";
+    else if (!/^[6-9]\d{9}$/.test(data.phone.replace(/[\s\-]/g, "").replace(/^\+?91/, ""))) errs.phone = "Enter a valid 10-digit mobile number";
     if (!data.grade) errs.grade = "Please select a grade";
     if (!data.city.trim()) errs.city = "City is required";
     if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errs.email = "Enter a valid email address";
