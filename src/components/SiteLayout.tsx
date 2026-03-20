@@ -41,8 +41,8 @@ export default function SiteLayout() {
       </div>
 
       {/* Header */}
-      <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-navy/95 backdrop-blur-xl shadow-lg shadow-black/10" : "bg-navy"}`}>
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between gap-3 h-16 md:h-18">
+      <header className={`sticky top-0 z-50 transition-all duration-300 border-b ${scrolled ? "bg-navy/95 backdrop-blur-xl shadow-lg shadow-black/10 border-white/10" : "bg-navy border-accent/30"}`}>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between gap-3 h-16 md:h-20">
           <NavLink className="flex items-center gap-2.5 min-w-0" to="/" onClick={() => setMenuOpen(false)}>
             <span className="w-10 h-10 md:w-11 md:h-11 shrink-0 rounded-xl bg-white/10 border border-white/10 grid place-items-center p-1">
               <img className="w-full h-full object-contain" src="./delhi%20logo.png" alt="DIS logo" loading="eager" />
