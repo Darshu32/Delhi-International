@@ -86,14 +86,14 @@ export default function SiteLayout() {
 
       {/* Header */}
       <header className={`sticky top-0 z-50 transition-all duration-300 border-b ${scrolled ? "bg-navy/95 backdrop-blur-xl shadow-lg shadow-black/10 border-white/10" : "bg-navy border-accent/30"}`}>
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between gap-3 h-16 md:h-20">
-          <NavLink className="flex items-center gap-2.5 min-w-0" to="/" onClick={() => setMenuOpen(false)}>
-            <span className="w-10 h-10 md:w-11 md:h-11 shrink-0 rounded-xl bg-white/10 border border-white/10 grid place-items-center p-1">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between gap-3 h-18 md:h-24">
+          <NavLink className="flex items-center gap-3 min-w-0 group" to="/" onClick={() => setMenuOpen(false)}>
+            <span className="w-12 h-12 md:w-14 md:h-14 shrink-0 rounded-xl bg-white/10 border border-white/10 grid place-items-center p-1.5 group-hover:bg-white/15 group-hover:border-accent/30 group-hover:scale-105 transition-all duration-300">
               <img className="w-full h-full object-contain" src="./delhi%20logo.png" alt="DIS logo" loading="eager" />
             </span>
             <span className="min-w-0">
-              <strong className="block text-sm md:text-[15px] font-display font-bold leading-tight text-white truncate">Delhi International School</strong>
-              <span className="block text-[11px] text-white/50 leading-tight">Shimoga, Karnataka</span>
+              <strong className="block text-[15px] md:text-lg font-display font-bold leading-tight text-white truncate group-hover:text-accent transition-colors duration-300">Delhi International School</strong>
+              <span className="block text-[11px] md:text-xs text-white/50 leading-tight group-hover:text-white/70 transition-colors duration-300">Shimoga, Karnataka</span>
             </span>
           </NavLink>
 
@@ -117,7 +117,7 @@ export default function SiteLayout() {
       {/* Mobile Nav */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.nav initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="fixed inset-0 top-16 z-40 bg-navy/98 backdrop-blur-2xl overflow-y-auto lg:hidden">
+          <motion.nav initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="fixed inset-0 top-18 z-40 bg-navy/98 backdrop-blur-2xl overflow-y-auto lg:hidden">
             <div className="flex flex-col gap-2 px-4 py-6">
               {navLinks.map((link, i) => (
                 <motion.div key={link.to} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
