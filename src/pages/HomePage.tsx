@@ -1,7 +1,8 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { admissionsSteps, galleryImages, programs, stats } from "../siteContent";
 import { useToast } from "../components/Toast";
+import { TiltCard, Counter, Lightbox, GlowCard, ParallaxImage, TextReveal, MagneticWrap } from "../components/Interactive";
 
 const HeroScene = lazy(() => import("../HeroScene"));
 
@@ -15,8 +16,21 @@ const stagger = (i: number) => ({ ...fadeUp.transition, delay: i * 0.08 });
 const statColors = ["from-amber-500 to-orange-500", "from-emerald-500 to-green-500", "from-blue-500 to-cyan-500", "from-violet-500 to-purple-500"];
 const programIconBg: Record<string, string> = { award: "from-amber-400 to-orange-500", play: "from-blue-400 to-indigo-600", campus: "from-emerald-400 to-green-600" };
 
+function parseStatValue(v: string): { num: number; suffix: string } {
+  const match = v.match(/^([\d,]+)(\+?)$/);
+  if (!match) return { num: 0, suffix: v };
+  return { num: parseInt(match[1].replace(/,/g, ""), 10), suffix: match[2] };
+}
+
 export default function HomePage() {
   const { toast } = useToast();
+  const allImages = galleryImages;
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIdx, setLightboxIdx] = useState(0);
+
+  const openLightbox = (i: number) => { setLightboxIdx(i); setLightboxOpen(true); };
+  const navLightbox = useCallback((dir: -1 | 1) => setLightboxIdx((p) => (p + dir + allImages.length) % allImages.length), [allImages.length]);
+
   return (
     <main>
       {/* HERO */}
@@ -34,17 +48,23 @@ export default function HomePage() {
               </motion.div>
 
               <h1 className="font-display text-[2rem] sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-extrabold leading-[1.05] tracking-tight text-white">
-                Where <span className="text-accent">wonder</span> awakens and <span className="text-green-light">curiosity</span> grows every day.
+                <TextReveal text="Where" className="text-white" />
+                {" "}<TextReveal text="wonder" className="text-accent" delay={0.15} />
+                {" "}<TextReveal text="awakens and" className="text-white" delay={0.25} />
+                {" "}<TextReveal text="curiosity" className="text-green-light" delay={0.4} />
+                {" "}<TextReveal text="grows every day." className="text-white" delay={0.5} />
               </h1>
               <p className="text-sm sm:text-base text-white/55 leading-relaxed max-w-md">
                 Delhi International School brings together quality CBSE academics, modern facilities, life-skill development, and a nurturing learning environment for children from playgroup to grade 10.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 mt-1">
-                <motion.a href="/admissions" className="flex items-center justify-center w-full sm:w-auto min-h-12 px-7 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all" whileTap={{ scale: 0.97 }}>
-                  Our Admissions
-                  <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-                </motion.a>
+                <MagneticWrap>
+                  <motion.a href="/admissions" className="flex items-center justify-center w-full sm:w-auto min-h-12 px-7 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all" whileTap={{ scale: 0.97 }}>
+                    Our Admissions
+                    <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                  </motion.a>
+                </MagneticWrap>
                 <motion.a href="/campus" className="flex items-center justify-center w-full sm:w-auto min-h-12 px-7 rounded-full bg-white/8 text-white font-bold text-sm border border-white/12 hover:bg-white/12 active:scale-[0.97] transition-all" whileTap={{ scale: 0.97 }}>Explore Campus</motion.a>
               </div>
 
@@ -63,7 +83,7 @@ export default function HomePage() {
 
             {/* Image Collage */}
             <motion.div className="relative lg:flex-1 flex justify-center" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.2 }}>
-              <div className="relative w-full max-w-md lg:max-w-lg">
+              <TiltCard className="relative w-full max-w-md lg:max-w-lg" intensity={8}>
                 <motion.div className="relative rounded-3xl overflow-hidden shadow-image border border-white/10 z-10" whileHover={{ y: -4 }} transition={{ duration: 0.3 }}>
                   <img src="./student%20.jpeg" alt="Students at Delhi International School" className="w-full h-64 sm:h-80 lg:h-96 object-cover" loading="eager" />
                   <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy/80 to-transparent" />
@@ -96,7 +116,7 @@ export default function HomePage() {
                 <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-2xl overflow-hidden opacity-40 z-0 hidden lg:block">
                   <Suspense fallback={null}><HeroScene /></Suspense>
                 </div>
-              </div>
+              </TiltCard>
             </motion.div>
           </div>
         </div>
@@ -118,13 +138,20 @@ export default function HomePage() {
       {/* STATS */}
       <section className="max-w-7xl mx-auto px-4 md:px-6 -mt-6 relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-          {stats.map((stat, i) => (
-            <motion.article key={stat.label} className="relative overflow-hidden p-4 md:p-5 rounded-2xl bg-white border border-border shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 group" {...fadeUp} transition={stagger(i)}>
-              <div className={`absolute -top-6 -right-6 w-16 h-16 rounded-full bg-gradient-to-br ${statColors[i]} opacity-10 group-hover:opacity-20 transition-opacity`} />
-              <strong className={`block text-2xl md:text-3xl font-extrabold tracking-tight mb-1 bg-gradient-to-r ${statColors[i]} bg-clip-text text-transparent`}>{stat.value}</strong>
-              <span className="text-xs md:text-sm text-text-muted leading-snug">{stat.label}</span>
-            </motion.article>
-          ))}
+          {stats.map((stat, i) => {
+            const { num, suffix } = parseStatValue(stat.value);
+            return (
+              <GlowCard key={stat.label}>
+                <motion.article className="relative overflow-hidden p-4 md:p-5 rounded-2xl bg-white border border-border shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 group" {...fadeUp} transition={stagger(i)}>
+                  <div className={`absolute -top-6 -right-6 w-16 h-16 rounded-full bg-gradient-to-br ${statColors[i]} opacity-10 group-hover:opacity-20 transition-opacity`} />
+                  <strong className={`block text-2xl md:text-3xl font-extrabold tracking-tight mb-1 bg-gradient-to-r ${statColors[i]} bg-clip-text text-transparent`}>
+                    <Counter value={num} suffix={suffix} />
+                  </strong>
+                  <span className="text-xs md:text-sm text-text-muted leading-snug">{stat.label}</span>
+                </motion.article>
+              </GlowCard>
+            );
+          })}
         </div>
       </section>
 
@@ -136,17 +163,19 @@ export default function HomePage() {
         </motion.div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {programs.map((program, i) => (
-            <motion.article key={program.title} className="group relative overflow-hidden p-5 md:p-6 rounded-2xl bg-white border border-border shadow-card hover:shadow-card-hover hover:-translate-y-2 transition-all duration-300" {...fadeUp} transition={stagger(i)}>
-              <div className={`w-12 h-12 mb-4 rounded-xl bg-gradient-to-br ${programIconBg[program.icon] || "from-gray-400 to-gray-500"} grid place-items-center shadow-sm`}>
-                {program.icon === "award" && <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2H22l-6 4.5 2.3 7.3L12 16.5 5.7 21l2.3-7.3-6-4.5h7.6z" /></svg>}
-                {program.icon === "play" && <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>}
-                {program.icon === "campus" && <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>}
-              </div>
-              {program.image && (<div className="mb-4 -mx-1 rounded-xl overflow-hidden"><img src={program.image} alt="DIS campus" className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" /></div>)}
-              <h3 className="font-display text-lg md:text-xl font-bold text-text-primary mb-2">{program.title}</h3>
-              <p className="text-sm text-text-secondary leading-relaxed">{program.text}</p>
-              <div className="mt-4 flex items-center text-accent-dark text-sm font-semibold opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300">Learn more <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></div>
-            </motion.article>
+            <TiltCard key={program.title} intensity={10}>
+              <motion.article className="group relative overflow-hidden p-5 md:p-6 rounded-2xl bg-white border border-border shadow-card hover:shadow-card-hover hover:-translate-y-2 transition-all duration-300 h-full" {...fadeUp} transition={stagger(i)}>
+                <div className={`w-12 h-12 mb-4 rounded-xl bg-gradient-to-br ${programIconBg[program.icon] || "from-gray-400 to-gray-500"} grid place-items-center shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
+                  {program.icon === "award" && <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2H22l-6 4.5 2.3 7.3L12 16.5 5.7 21l2.3-7.3-6-4.5h7.6z" /></svg>}
+                  {program.icon === "play" && <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>}
+                  {program.icon === "campus" && <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>}
+                </div>
+                {program.image && (<div className="mb-4 -mx-1 rounded-xl overflow-hidden"><img src={program.image} alt="DIS campus" className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" /></div>)}
+                <h3 className="font-display text-lg md:text-xl font-bold text-text-primary mb-2">{program.title}</h3>
+                <p className="text-sm text-text-secondary leading-relaxed">{program.text}</p>
+                <div className="mt-4 flex items-center text-accent-dark text-sm font-semibold opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300">Learn more <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></div>
+              </motion.article>
+            </TiltCard>
           ))}
         </div>
       </section>
@@ -157,7 +186,7 @@ export default function HomePage() {
           <div className="flex flex-col lg:flex-row gap-5 lg:gap-8">
             <motion.div className="lg:flex-1 relative group" {...fadeUp}>
               <div className="rounded-3xl overflow-hidden shadow-card border border-border">
-                <img src="https://delhiinternationalshimoga.com/wp-content/uploads/2026/03/WhatsApp-Image-2026-03-11-at-11.20.16-AM-1.jpeg" alt="Students at DIS" className="w-full h-64 sm:h-80 lg:h-full lg:min-h-96 object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
+                <ParallaxImage src="https://delhiinternationalshimoga.com/wp-content/uploads/2026/03/WhatsApp-Image-2026-03-11-at-11.20.16-AM-1.jpeg" alt="Students at DIS" className="h-64 sm:h-80 lg:h-full lg:min-h-96" />
               </div>
               <div className="absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:bottom-4 sm:w-56 p-3.5 rounded-2xl bg-white/90 backdrop-blur-xl shadow-elevated border border-white/50">
                 <strong className="block text-sm font-bold text-text-primary">Family-first learning</strong>
@@ -170,10 +199,12 @@ export default function HomePage() {
               <p className="text-sm text-text-secondary leading-relaxed">Delhi International School offers a safe, nurturing environment with experienced faculty, educational exploration, personal development programs, and structured academic growth.</p>
               <div className="flex flex-col gap-2.5 mt-2">
                 {[{icon:"🕐",t:"We are open",d:"Mon to Fri: 08:30 AM - 04:00 PM"},{icon:"🎯",t:"Activity-rich learning",d:"Abacus, life skills, talent discovery, and confidence building"},{icon:"📞",t:"Contact us",d:"9448220170"}].map((item) => (
-                  <div key={item.t} className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-border shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200">
-                    <span className="text-xl leading-none mt-0.5">{item.icon}</span>
-                    <div><strong className="block text-sm font-bold text-text-primary">{item.t}</strong><span className="text-xs text-text-muted">{item.d}</span></div>
-                  </div>
+                  <GlowCard key={item.t}>
+                    <div className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-border shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200">
+                      <span className="text-xl leading-none mt-0.5">{item.icon}</span>
+                      <div><strong className="block text-sm font-bold text-text-primary">{item.t}</strong><span className="text-xs text-text-muted">{item.d}</span></div>
+                    </div>
+                  </GlowCard>
                 ))}
               </div>
             </motion.div>
@@ -189,10 +220,15 @@ export default function HomePage() {
             <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-text-primary">Spaces that feel bright, active, and full of possibility.</h2>
           </motion.div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {galleryImages.map((image, i) => (
-              <motion.article key={`${image}-${i}`} className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300" {...fadeUp} transition={stagger(i)}>
-                <img src={image} alt="DIS gallery" className="w-full h-44 sm:h-52 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+            {allImages.map((image, i) => (
+              <motion.article key={`${image}-${i}`} className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover cursor-pointer transition-all duration-300" {...fadeUp} transition={stagger(i)} onClick={() => openLightbox(i)}>
+                <img src={image} alt="DIS gallery" className="w-full h-44 sm:h-52 object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm grid place-items-center">
+                    <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+                  </span>
+                </div>
               </motion.article>
             ))}
           </div>
@@ -209,16 +245,20 @@ export default function HomePage() {
             <p className="text-sm md:text-base text-white/50 max-w-2xl mx-auto leading-relaxed">Families can schedule a visit, meet the team, and complete registration with guidance from the school admissions office.</p>
           </motion.div>
           <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12" {...fadeUp}>
-            <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light transition-all">Call 9448220170</a>
+            <MagneticWrap>
+              <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light transition-all">Call 9448220170</a>
+            </MagneticWrap>
             <a href="mailto:admissions@delhiinternationalschool.edu" onClick={() => toast("Opening email client...", "info")} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-white/8 text-white font-bold text-sm border border-white/15 hover:bg-white/12 transition-all">Request Information</a>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-4">
             {admissionsSteps.map((step, i) => (
-              <motion.article key={step.id} className="group p-5 md:p-6 rounded-2xl bg-navy-card border border-navy-border hover:border-accent/30 hover:-translate-y-1 transition-all duration-300" {...fadeUp} transition={stagger(i)}>
-                <span className="inline-grid place-items-center w-10 h-10 mb-3 rounded-full bg-accent/10 text-accent font-extrabold text-sm border border-accent/20 group-hover:bg-accent group-hover:text-navy transition-all duration-300">{step.id}</span>
-                <h3 className="font-display text-lg font-bold text-white mb-1.5">{step.title}</h3>
-                <p className="text-sm text-white/50 leading-relaxed">{step.text}</p>
-              </motion.article>
+              <TiltCard key={step.id} intensity={12}>
+                <motion.article className="group p-5 md:p-6 rounded-2xl bg-navy-card border border-navy-border hover:border-accent/30 hover:-translate-y-1 transition-all duration-300" {...fadeUp} transition={stagger(i)}>
+                  <span className="inline-grid place-items-center w-10 h-10 mb-3 rounded-full bg-accent/10 text-accent font-extrabold text-sm border border-accent/20 group-hover:bg-accent group-hover:text-navy group-hover:scale-110 transition-all duration-300">{step.id}</span>
+                  <h3 className="font-display text-lg font-bold text-white mb-1.5">{step.title}</h3>
+                  <p className="text-sm text-white/50 leading-relaxed">{step.text}</p>
+                </motion.article>
+              </TiltCard>
             ))}
           </div>
         </div>
@@ -228,7 +268,7 @@ export default function HomePage() {
       <section className="relative">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-20">
           <motion.div className="relative rounded-3xl overflow-hidden shadow-elevated group" {...fadeUp}>
-            <img src="./school.jpeg" alt="DIS campus" className="w-full h-56 sm:h-72 lg:h-96 object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
+            <ParallaxImage src="./school.jpeg" alt="DIS campus" className="h-56 sm:h-72 lg:h-96" speed={0.1} />
             <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6 md:bottom-8 md:left-8">
               <h3 className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1">Our Campus</h3>
@@ -237,6 +277,8 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
+
+      <Lightbox images={allImages} open={lightboxOpen} index={lightboxIdx} onClose={() => setLightboxOpen(false)} onNav={navLightbox} />
     </main>
   );
 }

@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { TiltCard, GlowCard } from "../components/Interactive";
+
 const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.12 }, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } };
 const disWayPrograms = [
   { title: "WoW Wednesday", text: "A specially curated mid-week experience designed to break routine learning, where students engage in creative, hands-on activities that enhance curiosity, collaboration, and practical understanding.", accent: "orange", icon: "\u2728" },
@@ -9,6 +11,7 @@ const disWayPrograms = [
 ];
 const accentBg: Record<string, string> = { orange: "from-orange-50 to-amber-50/70", blue: "from-blue-50 to-indigo-50/60", green: "from-emerald-50 to-green-50/60", peach: "from-orange-50/80 to-rose-50/60", yellow: "from-yellow-50 to-amber-50/60" };
 const accentBorder: Record<string, string> = { orange: "hover:border-amber-300", blue: "hover:border-blue-300", green: "hover:border-emerald-300", peach: "hover:border-orange-300", yellow: "hover:border-yellow-300" };
+
 export default function TheDisWayPage() {
   return (
     <main>
@@ -27,23 +30,31 @@ export default function TheDisWayPage() {
       <section className="max-w-7xl mx-auto px-4 md:px-6 -mt-6 relative z-10 pb-12">
         <div className="grid md:grid-cols-2 gap-4 mb-4">
           {disWayPrograms.slice(0, 2).map((item, i) => (
-            <motion.article key={item.title} className={`group p-6 md:p-8 rounded-2xl bg-gradient-to-br ${accentBg[item.accent]} border border-border ${accentBorder[item.accent]} shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300`} {...fadeUp} transition={{ ...fadeUp.transition, delay: i * 0.08 }}>
-              <span className="text-3xl mb-3 block">{item.icon}</span>
-              <span className="text-[11px] font-bold tracking-widest uppercase text-accent-dark mb-2 block">The DIS Way</span>
-              <h2 className="font-display text-xl md:text-2xl font-bold text-text-primary mb-3">{item.title}</h2>
-              <p className="text-sm text-text-secondary leading-relaxed">{item.text}</p>
-            </motion.article>
+            <TiltCard key={item.title} intensity={8}>
+              <GlowCard>
+                <motion.article className={`group p-6 md:p-8 rounded-2xl bg-gradient-to-br ${accentBg[item.accent]} border border-border ${accentBorder[item.accent]} shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300`} {...fadeUp} transition={{ ...fadeUp.transition, delay: i * 0.08 }}>
+                  <span className="text-3xl mb-3 inline-block group-hover:scale-125 group-hover:-rotate-12 transition-transform duration-300">{item.icon}</span>
+                  <span className="text-[11px] font-bold tracking-widest uppercase text-accent-dark mb-2 block">The DIS Way</span>
+                  <h2 className="font-display text-xl md:text-2xl font-bold text-text-primary mb-3">{item.title}</h2>
+                  <p className="text-sm text-text-secondary leading-relaxed">{item.text}</p>
+                </motion.article>
+              </GlowCard>
+            </TiltCard>
           ))}
         </div>
         <div className="grid md:grid-cols-3 gap-4">
           {disWayPrograms.slice(2).map((item, i) => (
-            <motion.article key={item.title} className={`group p-5 md:p-6 rounded-2xl bg-gradient-to-br ${accentBg[item.accent]} border border-border ${accentBorder[item.accent]} shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300`} {...fadeUp} transition={{ ...fadeUp.transition, delay: (i+2) * 0.08 }}>
-              <span className="text-2xl mb-3 block">{item.icon}</span>
-              <span className="text-[11px] font-bold tracking-widest uppercase text-accent-dark mb-1 block">The DIS Way</span>
-              <h3 className="font-display text-lg font-bold text-text-primary mb-2">{item.title}</h3>
-              {item.subtitle && <strong className="block text-sm font-bold text-text-secondary mb-2">{item.subtitle}</strong>}
-              <p className="text-sm text-text-secondary leading-relaxed">{item.text}</p>
-            </motion.article>
+            <TiltCard key={item.title} intensity={10}>
+              <GlowCard>
+                <motion.article className={`group p-5 md:p-6 rounded-2xl bg-gradient-to-br ${accentBg[item.accent]} border border-border ${accentBorder[item.accent]} shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300`} {...fadeUp} transition={{ ...fadeUp.transition, delay: (i+2) * 0.08 }}>
+                  <span className="text-2xl mb-3 inline-block group-hover:scale-125 group-hover:-rotate-12 transition-transform duration-300">{item.icon}</span>
+                  <span className="text-[11px] font-bold tracking-widest uppercase text-accent-dark mb-1 block">The DIS Way</span>
+                  <h3 className="font-display text-lg font-bold text-text-primary mb-2">{item.title}</h3>
+                  {item.subtitle && <strong className="block text-sm font-bold text-text-secondary mb-2">{item.subtitle}</strong>}
+                  <p className="text-sm text-text-secondary leading-relaxed">{item.text}</p>
+                </motion.article>
+              </GlowCard>
+            </TiltCard>
           ))}
         </div>
       </section>
