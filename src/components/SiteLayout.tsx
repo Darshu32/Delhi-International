@@ -47,7 +47,7 @@ export default function SiteLayout() {
             <span className="w-10 h-10 md:w-11 md:h-11 shrink-0 rounded-xl bg-white/10 border border-white/10 grid place-items-center p-1">
               <img className="w-full h-full object-contain" src="./delhi%20logo.png" alt="DIS logo" loading="eager" />
             </span>
-            <span className="min-w-0 hidden sm:block">
+            <span className="min-w-0">
               <strong className="block text-sm md:text-[15px] font-display font-bold leading-tight text-white truncate">Delhi International School</strong>
               <span className="block text-[11px] text-white/50 leading-tight">Shimoga, Karnataka</span>
             </span>
