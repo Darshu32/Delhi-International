@@ -27,7 +27,12 @@ export default function SiteLayout() {
   useEffect(() => { const t = window.setTimeout(() => { setSubmitted(false); setPopupOpen(true); }, 800); return () => window.clearTimeout(t); }, []);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => { setFormData((c) => ({ ...c, [e.target.name]: e.target.value })); };
-  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setSubmitted(true); };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const msg = `*New Admission Enquiry*%0A%0A*Student Name:* ${formData.studentName}%0A*Parent Name:* ${formData.parentName}%0A*Phone:* ${formData.phone}%0A*Grade:* ${formData.grade}%0A*City:* ${formData.city}`;
+    window.open(`https://wa.me/919448220170?text=${msg}`, "_blank");
+    setSubmitted(true);
+  };
 
   return (
     <div className="min-h-dvh flex flex-col bg-white font-sans text-text-primary">

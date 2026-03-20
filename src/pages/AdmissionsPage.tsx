@@ -34,6 +34,11 @@ export default function AdmissionsPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const type = activeTab === "visit" ? "Campus Visit Request" : "Admission Enquiry";
+    let msg = `*New ${type}*%0A%0A*Student Name:* ${formData.studentName}%0A*Parent Name:* ${formData.parentName}%0A*Phone:* ${formData.phone}%0A*Grade:* ${formData.grade}%0A*City:* ${formData.city}`;
+    if (formData.email) msg += `%0A*Email:* ${formData.email}`;
+    if (formData.message) msg += `%0A*Message:* ${formData.message}`;
+    window.open(`https://wa.me/919448220170?text=${msg}`, "_blank");
     setSubmitted(true);
   };
 
