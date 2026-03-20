@@ -1,4 +1,5 @@
 import { lazy, Suspense, useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { admissionsSteps, galleryImages, programs, stats } from "../siteContent";
 import { useToast } from "../components/Toast";
@@ -164,6 +165,7 @@ export default function HomePage() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {programs.map((program, i) => (
             <TiltCard key={program.title} intensity={10}>
+              <Link to="/programs" className="block h-full">
               <motion.article className="group relative overflow-hidden p-5 md:p-6 rounded-2xl bg-white border border-border shadow-card hover:shadow-card-hover hover:-translate-y-2 transition-all duration-300 h-full" {...fadeUp} transition={stagger(i)}>
                 <div className={`w-12 h-12 mb-4 rounded-xl bg-gradient-to-br ${programIconBg[program.icon] || "from-gray-400 to-gray-500"} grid place-items-center shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
                   {program.icon === "award" && <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.4 7.2H22l-6 4.5 2.3 7.3L12 16.5 5.7 21l2.3-7.3-6-4.5h7.6z" /></svg>}
@@ -175,9 +177,16 @@ export default function HomePage() {
                 <p className="text-sm text-text-secondary leading-relaxed">{program.text}</p>
                 <div className="mt-4 flex items-center text-accent-dark text-sm font-semibold opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300">Learn more <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></div>
               </motion.article>
+              </Link>
             </TiltCard>
           ))}
         </div>
+        <motion.div className="flex justify-center mt-8" {...fadeUp}>
+          <Link to="/programs" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent/10 text-accent-dark font-bold text-sm border border-accent/20 hover:bg-accent/20 active:scale-[0.97] transition-all">
+            View All Programs
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          </Link>
+        </motion.div>
       </section>
 
       {/* TIMING */}
@@ -232,6 +241,12 @@ export default function HomePage() {
               </motion.article>
             ))}
           </div>
+          <motion.div className="flex justify-center mt-8" {...fadeUp}>
+            <Link to="/gallery" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-green/10 text-green font-bold text-sm border border-green/20 hover:bg-green/20 active:scale-[0.97] transition-all">
+              View Full Gallery
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
@@ -261,13 +276,20 @@ export default function HomePage() {
               </TiltCard>
             ))}
           </div>
+          <motion.div className="flex justify-center mt-8" {...fadeUp}>
+            <Link to="/admissions" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all">
+              Apply Now
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
       {/* CAMPUS */}
       <section className="relative">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-20">
-          <motion.div className="relative rounded-3xl overflow-hidden shadow-elevated group" {...fadeUp}>
+          <Link to="/campus">
+          <motion.div className="relative rounded-3xl overflow-hidden shadow-elevated group cursor-pointer" {...fadeUp}>
             <ParallaxImage src="./school.jpeg" alt="DIS campus" className="h-56 sm:h-72 lg:h-96" speed={0.1} />
             <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6 md:bottom-8 md:left-8">
@@ -275,6 +297,7 @@ export default function HomePage() {
               <p className="text-sm text-white/60 max-w-md">Smart classrooms, open spaces, and modern facilities built to inspire learning and all-round development.</p>
             </div>
           </motion.div>
+          </Link>
         </div>
       </section>
 
