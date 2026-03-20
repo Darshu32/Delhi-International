@@ -1,11 +1,9 @@
-import { lazy, Suspense, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { admissionsSteps, galleryImages, programs, stats } from "../siteContent";
 import { useToast } from "../components/Toast";
 import { TiltCard, Counter, Lightbox, GlowCard, ParallaxImage, TextReveal, MagneticWrap } from "../components/Interactive";
-
-const HeroScene = lazy(() => import("../HeroScene"));
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -39,87 +37,83 @@ export default function HomePage() {
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-green/5 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4 pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 md:px-6 pt-10 pb-12 md:pt-16 md:pb-20 lg:pt-20 lg:pb-24">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-10 lg:gap-14">
-            {/* Text */}
-            <motion.div className="flex flex-col gap-5 lg:flex-1 lg:max-w-xl" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-              <motion.div className="inline-flex items-center self-start gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}>
-                <span className="w-2 h-2 rounded-full bg-green animate-pulse" />
-                <span className="text-[11px] font-bold text-accent tracking-wide uppercase">Admissions Open 2026-27</span>
+        <div className="relative flex flex-col-reverse lg:flex-row lg:items-stretch min-h-[auto] lg:min-h-[540px] xl:min-h-[600px]">
+          {/* Text — left side */}
+          <motion.div className="flex flex-col justify-center gap-5 px-4 md:px-6 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:pr-10 py-10 md:py-14 lg:py-20 lg:w-[48%] xl:w-[45%] shrink-0" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            <motion.div className="inline-flex items-center self-start gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}>
+              <span className="w-2 h-2 rounded-full bg-green animate-pulse" />
+              <span className="text-[11px] font-bold text-accent tracking-wide uppercase">Admissions Open 2026-27</span>
+            </motion.div>
+
+            <h1 className="font-display text-[2rem] sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-extrabold leading-[1.05] tracking-tight text-white">
+              <TextReveal text="Where" className="text-white" />
+              {" "}<TextReveal text="wonder" className="text-accent" delay={0.15} />
+              {" "}<TextReveal text="awakens and" className="text-white" delay={0.25} />
+              {" "}<TextReveal text="curiosity" className="text-green-light" delay={0.4} />
+              {" "}<TextReveal text="grows every day." className="text-white" delay={0.5} />
+            </h1>
+            <p className="text-sm sm:text-base text-white/55 leading-relaxed max-w-md">
+              Delhi International School brings together quality CBSE academics, modern facilities, life-skill development, and a nurturing learning environment for children from playgroup to grade 10.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 mt-1">
+              <MagneticWrap>
+                <motion.a href="/admissions" className="flex items-center justify-center w-full sm:w-auto min-h-12 px-7 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all" whileTap={{ scale: 0.97 }}>
+                  Our Admissions
+                  <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                </motion.a>
+              </MagneticWrap>
+              <motion.a href="/campus" className="flex items-center justify-center w-full sm:w-auto min-h-12 px-7 rounded-full bg-white/8 text-white font-bold text-sm border border-white/12 hover:bg-white/12 active:scale-[0.97] transition-all" whileTap={{ scale: 0.97 }}>Explore Campus</motion.a>
+            </div>
+
+            <div className="flex items-center gap-4 mt-3">
+              <div className="flex -space-x-2">
+                {["from-teal-400 to-emerald-500","from-amber-400 to-orange-500","from-blue-400 to-indigo-500","from-pink-400 to-rose-500"].map((g, i) => (
+                  <span key={i} className={`w-8 h-8 rounded-full bg-gradient-to-br ${g} border-2 border-navy shadow-sm`} />
+                ))}
+              </div>
+              <div>
+                <strong className="block text-white text-sm font-bold">3,400+ happy students</strong>
+                <p className="text-[11px] text-white/40">Parents trust DIS for academics & values</p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Video — right side, edge-to-edge */}
+          <motion.div className="relative lg:flex-1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.1 }}>
+            <div className="relative h-64 sm:h-80 lg:h-full w-full overflow-hidden">
+              <video
+                className="w-full h-full object-cover"
+                src="./1774004937697949.mov"
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="./student%20.jpeg"
+              />
+              {/* Gradient overlays for blending */}
+              <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/40 to-transparent pointer-events-none hidden lg:block" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-transparent pointer-events-none lg:hidden" />
+              {/* Floating badges */}
+              <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 z-10 lg:bottom-6 lg:left-6">
+                <span className="px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-md text-[11px] font-bold text-white border border-white/15">CBSE Affiliated</span>
+                <span className="px-3 py-1.5 rounded-full bg-accent/20 backdrop-blur-md text-[11px] font-bold text-accent border border-accent/20">Ranked #1 Shimoga</span>
+              </div>
+              {/* Floating stat cards */}
+              <motion.div className="absolute top-4 left-4 lg:top-6 lg:left-6 z-20 px-3.5 py-2.5 rounded-2xl bg-navy-card/90 backdrop-blur-xl border border-white/10 shadow-elevated animate-float-slow">
+                <span className="block text-[10px] text-white/50 font-medium uppercase tracking-wider">Students</span>
+                <strong className="block text-xl font-extrabold text-white">3,400+</strong>
+                <span className="flex items-center gap-1 text-[10px] text-green font-semibold">
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" /></svg>
+                  Growing yearly
+                </span>
               </motion.div>
-
-              <h1 className="font-display text-[2rem] sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-extrabold leading-[1.05] tracking-tight text-white">
-                <TextReveal text="Where" className="text-white" />
-                {" "}<TextReveal text="wonder" className="text-accent" delay={0.15} />
-                {" "}<TextReveal text="awakens and" className="text-white" delay={0.25} />
-                {" "}<TextReveal text="curiosity" className="text-green-light" delay={0.4} />
-                {" "}<TextReveal text="grows every day." className="text-white" delay={0.5} />
-              </h1>
-              <p className="text-sm sm:text-base text-white/55 leading-relaxed max-w-md">
-                Delhi International School brings together quality CBSE academics, modern facilities, life-skill development, and a nurturing learning environment for children from playgroup to grade 10.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-3 mt-1">
-                <MagneticWrap>
-                  <motion.a href="/admissions" className="flex items-center justify-center w-full sm:w-auto min-h-12 px-7 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all" whileTap={{ scale: 0.97 }}>
-                    Our Admissions
-                    <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-                  </motion.a>
-                </MagneticWrap>
-                <motion.a href="/campus" className="flex items-center justify-center w-full sm:w-auto min-h-12 px-7 rounded-full bg-white/8 text-white font-bold text-sm border border-white/12 hover:bg-white/12 active:scale-[0.97] transition-all" whileTap={{ scale: 0.97 }}>Explore Campus</motion.a>
-              </div>
-
-              <div className="flex items-center gap-4 mt-3">
-                <div className="flex -space-x-2">
-                  {["from-teal-400 to-emerald-500","from-amber-400 to-orange-500","from-blue-400 to-indigo-500","from-pink-400 to-rose-500"].map((g, i) => (
-                    <span key={i} className={`w-8 h-8 rounded-full bg-gradient-to-br ${g} border-2 border-navy shadow-sm`} />
-                  ))}
-                </div>
-                <div>
-                  <strong className="block text-white text-sm font-bold">3,400+ happy students</strong>
-                  <p className="text-[11px] text-white/40">Parents trust DIS for academics & values</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Image Collage */}
-            <motion.div className="relative lg:flex-1 flex justify-center" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.2 }}>
-              <TiltCard className="relative w-full max-w-md lg:max-w-lg" intensity={8}>
-                <motion.div className="relative rounded-3xl overflow-hidden shadow-image border border-white/10 z-10" whileHover={{ y: -4 }} transition={{ duration: 0.3 }}>
-                  <img src="./student%20.jpeg" alt="Students at Delhi International School" className="w-full h-64 sm:h-80 lg:h-96 object-cover" loading="eager" />
-                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy/80 to-transparent" />
-                  <button className="play-btn absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-accent grid place-items-center shadow-glow z-20 hover:scale-110 active:scale-95 transition-transform">
-                    <svg className="w-6 h-6 text-navy ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                  </button>
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2 z-10">
-                    <span className="px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-[11px] font-bold text-white border border-white/15">CBSE Affiliated</span>
-                    <span className="px-3 py-1 rounded-full bg-accent/20 backdrop-blur-md text-[11px] font-bold text-accent border border-accent/20">Ranked #1 Shimoga</span>
-                  </div>
-                </motion.div>
-                <motion.div className="absolute -top-4 -right-3 sm:-top-6 sm:-right-6 w-28 sm:w-36 rounded-2xl overflow-hidden shadow-image border-2 border-navy z-20 animate-float">
-                  <img src="./experiment.jpeg" alt="Student project" className="w-full h-20 sm:h-28 object-cover" loading="eager" />
-                </motion.div>
-                <motion.div className="absolute -bottom-3 -left-3 sm:-bottom-5 sm:-left-6 w-32 sm:w-40 rounded-2xl overflow-hidden shadow-image border-2 border-navy z-20 animate-float-delayed">
-                  <img src="./teacher.jpeg" alt="Teacher with students" className="w-full h-24 sm:h-32 object-cover" loading="eager" />
-                </motion.div>
-                <motion.div className="absolute top-4 -left-2 sm:-left-8 z-30 px-3.5 py-2.5 rounded-2xl bg-navy-card/90 backdrop-blur-xl border border-white/10 shadow-elevated animate-float-slow">
-                  <span className="block text-[10px] text-white/50 font-medium uppercase tracking-wider">Students</span>
-                  <strong className="block text-xl font-extrabold text-white">3,400+</strong>
-                  <span className="flex items-center gap-1 text-[10px] text-green font-semibold">
-                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" /></svg>
-                    Growing yearly
-                  </span>
-                </motion.div>
-                <motion.div className="absolute -bottom-2 right-2 sm:-bottom-3 sm:right-4 z-30 px-3.5 py-2.5 rounded-2xl bg-navy-card/90 backdrop-blur-xl border border-white/10 shadow-elevated animate-float">
-                  <span className="block text-[10px] text-white/50 font-medium uppercase tracking-wider">Experience</span>
-                  <strong className="block text-xl font-extrabold text-accent">10+ yrs</strong>
-                </motion.div>
-                <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-2xl overflow-hidden opacity-40 z-0 hidden lg:block">
-                  <Suspense fallback={null}><HeroScene /></Suspense>
-                </div>
-              </TiltCard>
-            </motion.div>
-          </div>
+              <motion.div className="absolute bottom-14 right-4 lg:bottom-16 lg:right-6 z-20 px-3.5 py-2.5 rounded-2xl bg-navy-card/90 backdrop-blur-xl border border-white/10 shadow-elevated animate-float">
+                <span className="block text-[10px] text-white/50 font-medium uppercase tracking-wider">Experience</span>
+                <strong className="block text-xl font-extrabold text-accent">10+ yrs</strong>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
 
         {/* Marquee */}
