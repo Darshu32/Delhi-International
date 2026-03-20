@@ -39,11 +39,8 @@ export default function HomePage() {
             <div key={s} className="flex items-center gap-6 px-3">
               {[
                 { text: "Admissions Open 2026-27", highlight: true },
-                { text: "Playgroup to Grade 10" },
+                { text: "Playgroup to Grade 10", highlight: true },
                 { text: "CBSE Affiliated", highlight: true },
-                { text: "Award-Winning School" },
-                { text: "Future-Ready Campus" },
-                { text: "Ranked #1 in Shimoga", highlight: true },
               ].map((item) => (
                 <span key={`${s}-${item.text}`} className="flex items-center gap-2.5 text-sm font-bold text-navy">
                   <span className="w-2 h-2 rounded-full bg-navy/30 shrink-0" />
