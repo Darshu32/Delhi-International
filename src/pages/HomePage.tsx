@@ -32,6 +32,33 @@ export default function HomePage() {
 
   return (
     <main>
+      {/* Highlights Ticker */}
+      <div className="bg-accent overflow-hidden">
+        <div className="flex animate-marquee whitespace-nowrap py-2.5">
+          {[...Array(3)].map((_, s) => (
+            <div key={s} className="flex items-center gap-6 px-3">
+              {[
+                { text: "Admissions Open 2026-27", highlight: true },
+                { text: "Playgroup to Grade 10" },
+                { text: "CBSE Affiliated", highlight: true },
+                { text: "Award-Winning School" },
+                { text: "Future-Ready Campus" },
+                { text: "Ranked #1 in Shimoga", highlight: true },
+              ].map((item) => (
+                <span key={`${s}-${item.text}`} className="flex items-center gap-2.5 text-sm font-bold text-navy">
+                  <span className="w-2 h-2 rounded-full bg-navy/30 shrink-0" />
+                  {item.highlight ? (
+                    <span className="px-2 py-0.5 rounded-md bg-navy text-accent text-xs font-extrabold uppercase tracking-wide">{item.text}</span>
+                  ) : (
+                    <span className="uppercase tracking-wide text-xs font-extrabold">{item.text}</span>
+                  )}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* HERO */}
       <section className="relative bg-navy overflow-hidden">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
