@@ -178,7 +178,7 @@ export default function SiteLayout() {
         href="https://wa.me/919448220170?text=Hi!%20I%20am%20interested%20in%20admission%20at%20Delhi%20International%20School.%20Can%20you%20help%20me?"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-50 group"
+        className="hidden md:flex fixed bottom-6 right-6 z-50 group"
         aria-label="Chat on WhatsApp"
       >
         <span className="absolute inset-0 rounded-full bg-[#25D366] animate-pulse-ring" />
