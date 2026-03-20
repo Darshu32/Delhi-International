@@ -68,10 +68,10 @@ export default function AdmissionsPage() {
     setTouched({ studentName: true, parentName: true, phone: true, email: true, grade: true, city: true, message: true });
     if (Object.keys(errs).length > 0) return;
     const type = activeTab === "visit" ? "Campus Visit Request" : "Admission Enquiry";
-    let msg = `*New ${type}*%0A%0A*Student Name:* ${formData.studentName.trim()}%0A*Parent Name:* ${formData.parentName.trim()}%0A*Phone:* ${formData.phone.trim()}%0A*Grade:* ${formData.grade}%0A*City:* ${formData.city.trim()}`;
-    if (formData.email) msg += `%0A*Email:* ${formData.email.trim()}`;
-    if (formData.message) msg += `%0A*Message:* ${formData.message.trim()}`;
-    window.open(`https://wa.me/919448220170?text=${msg}`, "_blank");
+    let msg = `*New ${type}*\n\n*Student Name:* ${formData.studentName.trim()}\n*Parent Name:* ${formData.parentName.trim()}\n*Phone:* ${formData.phone.trim()}\n*Grade:* ${formData.grade}\n*City:* ${formData.city.trim()}`;
+    if (formData.email) msg += `\n*Email:* ${formData.email.trim()}`;
+    if (formData.message) msg += `\n*Message:* ${formData.message.trim()}`;
+    window.open(`https://wa.me/919448220170?text=${encodeURIComponent(msg)}`, "_blank");
     setSubmitted(true);
   };
 

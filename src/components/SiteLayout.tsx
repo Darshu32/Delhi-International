@@ -64,8 +64,8 @@ export default function SiteLayout() {
     setErrors(errs);
     setTouched({ studentName: true, parentName: true, phone: true, grade: true, city: true });
     if (Object.keys(errs).length > 0) return;
-    const msg = `*New Admission Enquiry*%0A%0A*Student Name:* ${formData.studentName.trim()}%0A*Parent Name:* ${formData.parentName.trim()}%0A*Phone:* ${formData.phone.trim()}%0A*Grade:* ${formData.grade}%0A*City:* ${formData.city.trim()}`;
-    window.open(`https://wa.me/919448220170?text=${msg}`, "_blank");
+    const msg = `*New Admission Enquiry*\n\n*Student Name:* ${formData.studentName.trim()}\n*Parent Name:* ${formData.parentName.trim()}\n*Phone:* ${formData.phone.trim()}\n*Grade:* ${formData.grade}\n*City:* ${formData.city.trim()}`;
+    window.open(`https://wa.me/919448220170?text=${encodeURIComponent(msg)}`, "_blank");
     setSubmitted(true);
   };
   const inputCls = (name: string) => `w-full min-h-11 px-3.5 rounded-xl border ${errors[name] && touched[name] ? "border-red-400 bg-red-50/50 focus:border-red-500 focus:ring-red-200/50" : "border-border bg-surface-dim focus:border-accent focus:ring-accent/20"} text-text-primary text-sm outline-none focus:ring-2 transition-all placeholder:text-text-muted/50`;
