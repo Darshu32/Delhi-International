@@ -7,7 +7,7 @@ const navLinks = [
   { to: "/about", label: "About" },
   { to: "/the-dis-way", label: "The DIS Way", featured: true },
   { to: "/academics", label: "Academics" },
-  { to: "/programs", label: "Culture" },
+  { to: "/programs", label: "Cultural Connect" },
   { to: "/campus", label: "Campus" },
   { to: "/gallery", label: "Gallery" },
   { to: "/admissions", label: "Admissions" },

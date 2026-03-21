@@ -12,7 +12,7 @@ export default function ProgramsPage() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-14 md:py-20">
           <motion.div className="max-w-2xl" {...fadeUp}>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-[11px] font-bold text-accent uppercase tracking-wider border border-accent/20 mb-4">Culture</span>
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-[11px] font-bold text-accent uppercase tracking-wider border border-accent/20 mb-4">Cultural Connect</span>
             <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight mb-4">Dedicated space for signature learning experiences and standout school offerings.</h1>
             <p className="text-sm md:text-base text-white/50 leading-relaxed">This page is ready for deeper program descriptions, grade-wise structure, labs, activity blocks, and signature initiatives.</p>
           </motion.div>
