@@ -3,7 +3,7 @@ const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0
 export default function CampusPage() {
   return (
     <main>
-      <section className="bg-white relative overflow-hidden">
+      <section className="bg-surface relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-green/8 rounded-full blur-[100px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-14 md:py-20">
           <motion.div className="max-w-2xl" {...fadeUp}>

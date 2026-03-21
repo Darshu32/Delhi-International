@@ -16,7 +16,7 @@ const accentBorder: Record<string, string> = { orange: "hover:border-amber-300",
 export default function TheDisWayPage() {
   return (
     <main>
-      <section className="bg-white relative overflow-hidden">
+      <section className="bg-surface relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[400px] bg-green/8 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/8 rounded-full blur-[100px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-14 md:py-20">

@@ -74,7 +74,7 @@ export default function SiteLayout() {
   const inputCls = (name: string) => `w-full min-h-11 px-3.5 rounded-xl border ${errors[name] && touched[name] ? "border-red-400 bg-red-50/50 focus:border-red-500 focus:ring-red-200/50" : "border-border bg-surface-dim focus:border-accent focus:ring-accent/20"} text-text-primary text-sm outline-none focus:ring-2 transition-all placeholder:text-text-muted/50`;
 
   return (
-    <div className="min-h-dvh flex flex-col bg-white font-sans text-text-primary">
+    <div className="min-h-dvh flex flex-col bg-surface font-sans text-text-primary">
       {/* Top Ribbon */}
       <div className="hidden md:block bg-navy text-white/70">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between gap-4 h-9 text-[11px] font-medium tracking-wider uppercase">
@@ -85,7 +85,7 @@ export default function SiteLayout() {
       </div>
 
       {/* Header */}
-      <header className={`sticky top-0 z-50 transition-all duration-300 border-b ${scrolled ? "bg-white/95 backdrop-blur-xl shadow-lg shadow-black/5 border-border" : "bg-white border-border"}`}>
+      <header className={`sticky top-0 z-50 transition-all duration-300 border-b ${scrolled ? "bg-surface/95 backdrop-blur-xl shadow-lg shadow-blue-900/5 border-border" : "bg-surface border-border"}`}>
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between gap-3 h-18 md:h-24">
           <NavLink className="flex items-center gap-3 min-w-0 group" to="/" onClick={() => setMenuOpen(false)}>
             <span className="w-12 h-12 md:w-14 md:h-14 shrink-0 rounded-xl bg-surface-dim border border-border grid place-items-center p-1.5 group-hover:border-accent/40 group-hover:scale-105 transition-all duration-300">
@@ -117,7 +117,7 @@ export default function SiteLayout() {
       {/* Mobile Nav */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.nav initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="fixed inset-0 top-18 z-40 bg-white/98 backdrop-blur-2xl overflow-y-auto lg:hidden">
+          <motion.nav initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="fixed inset-0 top-18 z-40 bg-surface/98 backdrop-blur-2xl overflow-y-auto lg:hidden">
             <div className="flex flex-col gap-2 px-4 py-6">
               {navLinks.map((link, i) => (
                 <motion.div key={link.to} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
@@ -310,7 +310,7 @@ export default function SiteLayout() {
       </a>
 
       {/* Sticky Mobile CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white/95 backdrop-blur-xl border-t border-border px-4 py-3">
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-surface/95 backdrop-blur-xl border-t border-border px-4 py-3">
         <div className="flex gap-2">
           <button type="button" onClick={() => setPopupOpen(true)} className="flex-1 min-h-12 flex items-center justify-center gap-2 rounded-full bg-accent text-white font-extrabold text-[15px] shadow-glow active:scale-[0.97] transition-transform">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>

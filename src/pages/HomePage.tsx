@@ -118,8 +118,8 @@ export default function HomePage() {
                 <source src="./hero-video.mp4" type="video/mp4" />
               </video>
               {/* Gradient overlay for blending into text on desktop */}
-              <div className="absolute inset-0 bg-gradient-to-r from-white via-white/30 to-transparent pointer-events-none hidden lg:block" />
-              <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-transparent to-transparent pointer-events-none lg:hidden" />
+              <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/30 to-transparent pointer-events-none hidden lg:block" />
+              <div className="absolute inset-0 bg-gradient-to-t from-surface/90 via-transparent to-transparent pointer-events-none lg:hidden" />
             </div>
           </motion.div>
         </div>
