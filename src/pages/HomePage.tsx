@@ -42,10 +42,10 @@ export default function HomePage() {
                 { text: "Playgroup to Grade 10", highlight: true },
                 { text: "CBSE Affiliated", highlight: true },
               ].map((item) => (
-                <span key={`${s}-${item.text}`} className="flex items-center gap-2.5 text-sm font-bold text-navy">
-                  <span className="w-2 h-2 rounded-full bg-navy/30 shrink-0" />
+                <span key={`${s}-${item.text}`} className="flex items-center gap-2.5 text-sm font-bold text-white">
+                  <span className="w-2 h-2 rounded-full bg-white/40 shrink-0" />
                   {item.highlight ? (
-                    <span className="px-2 py-0.5 rounded-md bg-navy text-accent text-xs font-extrabold uppercase tracking-wide">{item.text}</span>
+                    <span className="px-2 py-0.5 rounded-md bg-white text-accent-dark text-xs font-extrabold uppercase tracking-wide">{item.text}</span>
                   ) : (
                     <span className="uppercase tracking-wide text-xs font-extrabold">{item.text}</span>
                   )}
@@ -57,7 +57,7 @@ export default function HomePage() {
       </div>
 
       {/* HERO */}
-      <section className="relative bg-navy overflow-hidden">
+      <section className="relative bg-white overflow-hidden">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-green/5 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4 pointer-events-none" />
 
@@ -66,46 +66,46 @@ export default function HomePage() {
           <motion.div className="flex flex-col gap-5 px-4 md:px-6 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:pr-10 py-10 md:py-14 lg:py-16 lg:w-[48%] xl:w-[45%] shrink-0" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <motion.div className="inline-flex items-center self-start gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}>
               <span className="w-2 h-2 rounded-full bg-green animate-pulse" />
-              <span className="text-[11px] font-bold text-accent tracking-wide uppercase">Admissions Open 2026-27</span>
+              <span className="text-xs font-bold text-accent-dark tracking-wide uppercase">Admissions Open 2026-27</span>
             </motion.div>
 
-            <h1 className="font-display text-[2rem] sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-extrabold leading-[1.05] tracking-tight text-white">
-              <TextReveal text="Where" className="text-white" />
-              {" "}<TextReveal text="wonder" className="text-accent" delay={0.15} />
-              {" "}<TextReveal text="awakens and" className="text-white" delay={0.25} />
-              {" "}<TextReveal text="curiosity" className="text-green-light" delay={0.4} />
-              {" "}<TextReveal text="grows every day." className="text-white" delay={0.5} />
+            <h1 className="font-display text-[2.25rem] sm:text-5xl lg:text-6xl xl:text-[4rem] font-extrabold leading-[1.05] tracking-tight text-text-primary">
+              <TextReveal text="Where" className="text-text-primary" />
+              {" "}<TextReveal text="wonder" className="text-accent-dark" delay={0.15} />
+              {" "}<TextReveal text="awakens and" className="text-text-primary" delay={0.25} />
+              {" "}<TextReveal text="curiosity" className="text-green" delay={0.4} />
+              {" "}<TextReveal text="grows every day." className="text-text-primary" delay={0.5} />
             </h1>
-            <p className="text-sm sm:text-base text-white/55 leading-relaxed max-w-md">
+            <p className="text-sm sm:text-base md:text-lg text-text-secondary leading-relaxed max-w-md">
               Delhi International School brings together quality CBSE academics, modern facilities, life-skill development, and a nurturing learning environment for children from playgroup to grade 10.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 mt-1">
               <MagneticWrap>
-                <motion.a href="/admissions" className="flex items-center justify-center w-full sm:w-auto min-h-12 px-7 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all" whileTap={{ scale: 0.97 }}>
+                <motion.a href="/admissions" className="flex items-center justify-center w-full sm:w-auto min-h-12 px-7 rounded-full bg-accent text-white font-extrabold text-sm shadow-glow hover:bg-accent-dark active:scale-[0.97] transition-all" whileTap={{ scale: 0.97 }}>
                   Our Admissions
                   <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                 </motion.a>
               </MagneticWrap>
-              <motion.a href="/campus" className="flex items-center justify-center w-full sm:w-auto min-h-12 px-7 rounded-full bg-white/8 text-white font-bold text-sm border border-white/12 hover:bg-white/12 active:scale-[0.97] transition-all" whileTap={{ scale: 0.97 }}>Explore Campus</motion.a>
+              <motion.a href="/campus" className="flex items-center justify-center w-full sm:w-auto min-h-12 px-7 rounded-full bg-surface-dim text-text-primary font-bold text-sm border border-border hover:bg-surface-muted active:scale-[0.97] transition-all" whileTap={{ scale: 0.97 }}>Explore Campus</motion.a>
             </div>
 
             <div className="flex items-center gap-4 mt-3">
               <div className="flex -space-x-2">
                 {["from-teal-400 to-emerald-500","from-amber-400 to-orange-500","from-blue-400 to-indigo-500","from-pink-400 to-rose-500"].map((g, i) => (
-                  <span key={i} className={`w-8 h-8 rounded-full bg-gradient-to-br ${g} border-2 border-navy shadow-sm`} />
+                  <span key={i} className={`w-8 h-8 rounded-full bg-gradient-to-br ${g} border-2 border-white shadow-sm`} />
                 ))}
               </div>
               <div>
-                <strong className="block text-white text-sm font-bold">3,400+ happy students</strong>
-                <p className="text-[11px] text-white/40">Parents trust DIS for academics & values</p>
+                <strong className="block text-text-primary text-sm font-bold">3,400+ happy students</strong>
+                <p className="text-[11px] text-text-muted">Parents trust DIS for academics & values</p>
               </div>
             </div>
           </motion.div>
 
           {/* Video — right side, edge-to-edge, aligned with text top */}
           <motion.div className="relative lg:flex-1 lg:self-stretch" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.1 }}>
-            <div className="relative h-56 sm:h-72 lg:h-full w-full overflow-hidden bg-navy flex items-center">
+            <div className="relative h-56 sm:h-72 lg:h-full w-full overflow-hidden bg-surface-dim flex items-center">
               <video
                 className="w-full h-full object-contain"
                 autoPlay
@@ -118,19 +118,19 @@ export default function HomePage() {
                 <source src="./hero-video.mp4" type="video/mp4" />
               </video>
               {/* Gradient overlay for blending into text on desktop */}
-              <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/30 to-transparent pointer-events-none hidden lg:block" />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent pointer-events-none lg:hidden" />
+              <div className="absolute inset-0 bg-gradient-to-r from-white via-white/30 to-transparent pointer-events-none hidden lg:block" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-transparent to-transparent pointer-events-none lg:hidden" />
             </div>
           </motion.div>
         </div>
 
         {/* Marquee */}
-        <div className="border-t border-white/6 bg-white/[0.02] py-4 overflow-hidden">
+        <div className="border-t border-border bg-surface-dim py-4 overflow-hidden">
           <div className="flex animate-marquee whitespace-nowrap">
             {[...Array(2)].map((_, s) => (
               <div key={s} className="flex gap-8 px-4">
                 {["CBSE School","Life Skills","WoW Wednesday","Math Lab","Language Lab","Super Saturday","Smart Classrooms","Award Winning"].map((item) => (
-                  <span key={`${s}-${item}`} className="flex items-center gap-2 text-sm text-white/30 font-semibold"><span className="w-1.5 h-1.5 rounded-full bg-accent/50" />{item}</span>
+                  <span key={`${s}-${item}`} className="flex items-center gap-2 text-sm text-text-muted font-semibold"><span className="w-1.5 h-1.5 rounded-full bg-accent/50" />{item}</span>
                 ))}
               </div>
             ))}
@@ -253,33 +253,33 @@ export default function HomePage() {
       </section>
 
       {/* ADMISSIONS */}
-      <section className="bg-navy relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
+      <section className="bg-surface-dim relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-accent/8 rounded-full blur-[100px] pointer-events-none" />
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-20">
           <motion.div className="text-center mb-10" {...fadeUp}>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-[11px] font-bold text-accent uppercase tracking-wider mb-4 border border-accent/20">Admission registration</span>
-            <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4">Admissions are open for playgroup to grade 10 for 2026-2027.</h2>
-            <p className="text-sm md:text-base text-white/50 max-w-2xl mx-auto leading-relaxed">Families can schedule a visit, meet the team, and complete registration with guidance from the school admissions office.</p>
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-xs font-bold text-accent-dark uppercase tracking-wider mb-4 border border-accent/20">Admission registration</span>
+            <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-text-primary mb-4">Admissions are open for playgroup to grade 10 for 2026-2027.</h2>
+            <p className="text-sm md:text-base text-text-secondary max-w-2xl mx-auto leading-relaxed">Families can schedule a visit, meet the team, and complete registration with guidance from the school admissions office.</p>
           </motion.div>
           <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12" {...fadeUp}>
             <MagneticWrap>
-              <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light transition-all">Call 9448220170</a>
+              <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-accent text-white font-extrabold text-sm shadow-glow hover:bg-accent-dark transition-all">Call 9448220170</a>
             </MagneticWrap>
-            <a href="mailto:admissions@delhiinternationalschool.edu" onClick={() => toast("Opening email client...", "info")} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-white/8 text-white font-bold text-sm border border-white/15 hover:bg-white/12 transition-all">Request Information</a>
+            <a href="mailto:admissions@delhiinternationalschool.edu" onClick={() => toast("Opening email client...", "info")} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-white text-text-primary font-bold text-sm border border-border hover:bg-surface-muted transition-all">Request Information</a>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-4">
             {admissionsSteps.map((step, i) => (
               <TiltCard key={step.id} intensity={12}>
-                <motion.article className="group p-5 md:p-6 rounded-2xl bg-navy-card border border-navy-border hover:border-accent/30 hover:-translate-y-1 transition-all duration-300" {...fadeUp} transition={stagger(i)}>
-                  <span className="inline-grid place-items-center w-10 h-10 mb-3 rounded-full bg-accent/10 text-accent font-extrabold text-sm border border-accent/20 group-hover:bg-accent group-hover:text-navy group-hover:scale-110 transition-all duration-300">{step.id}</span>
-                  <h3 className="font-display text-lg font-bold text-white mb-1.5">{step.title}</h3>
-                  <p className="text-sm text-white/50 leading-relaxed">{step.text}</p>
+                <motion.article className="group p-5 md:p-6 rounded-2xl bg-white border border-border shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300" {...fadeUp} transition={stagger(i)}>
+                  <span className="inline-grid place-items-center w-10 h-10 mb-3 rounded-full bg-accent/10 text-accent-dark font-extrabold text-sm border border-accent/20 group-hover:bg-accent group-hover:text-white group-hover:scale-110 transition-all duration-300">{step.id}</span>
+                  <h3 className="font-display text-lg font-bold text-text-primary mb-1.5">{step.title}</h3>
+                  <p className="text-sm text-text-secondary leading-relaxed">{step.text}</p>
                 </motion.article>
               </TiltCard>
             ))}
           </div>
           <motion.div className="flex justify-center mt-8" {...fadeUp}>
-            <Link to="/admissions" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all">
+            <Link to="/admissions" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-white font-extrabold text-sm shadow-glow hover:bg-accent-dark active:scale-[0.97] transition-all">
               Apply Now
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
             </Link>

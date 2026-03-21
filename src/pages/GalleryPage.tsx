@@ -15,12 +15,12 @@ export default function GalleryPage() {
 
   return (
     <main>
-      <section className="bg-navy relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
+      <section className="bg-white relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-accent/8 rounded-full blur-[100px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
           <motion.div className="text-center" {...fadeUp}>
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white leading-[1.05] tracking-tight">
-              Our <span className="text-accent">Gallery</span>
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold text-text-primary leading-[1.05] tracking-tight">
+              Our <span className="text-accent-dark">Gallery</span>
             </h1>
           </motion.div>
         </div>

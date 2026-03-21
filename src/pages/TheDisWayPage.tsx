@@ -16,15 +16,15 @@ const accentBorder: Record<string, string> = { orange: "hover:border-amber-300",
 export default function TheDisWayPage() {
   return (
     <main>
-      <section className="bg-navy relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[400px] bg-green/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
+      <section className="bg-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[400px] bg-green/8 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/8 rounded-full blur-[100px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-14 md:py-20">
           <motion.div className="max-w-2xl" {...fadeUp}>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green/10 text-[11px] font-bold text-green-light uppercase tracking-wider border border-green/20 mb-4">The DIS Way</span>
-            <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight mb-4">Signature experiences that make school life creative, confident, and deeply engaging.</h1>
-            <p className="text-sm md:text-base text-white/50 leading-relaxed mb-5">The DIS Way brings together joyful learning, student leadership, expression, confidence, and interest-based exploration so children grow beyond textbooks into capable, future-ready individuals.</p>
-            <div className="flex flex-wrap gap-2">{["Hands-on exploration", "Confidence-building culture", "Interest-led growth"].map((c) => (<span key={c} className="px-3 py-1.5 rounded-full bg-white/8 text-xs font-semibold text-white/70 border border-white/10">{c}</span>))}</div>
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green/10 text-[11px] font-bold text-green uppercase tracking-wider border border-green/20 mb-4">The DIS Way</span>
+            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-4">Signature experiences that make school life creative, confident, and deeply engaging.</h1>
+            <p className="text-sm md:text-base text-text-secondary leading-relaxed mb-5">The DIS Way brings together joyful learning, student leadership, expression, confidence, and interest-based exploration so children grow beyond textbooks into capable, future-ready individuals.</p>
+            <div className="flex flex-wrap gap-2">{["Hands-on exploration", "Confidence-building culture", "Interest-led growth"].map((c) => (<span key={c} className="px-3 py-1.5 rounded-full bg-accent/8 text-xs font-semibold text-text-secondary border border-border">{c}</span>))}</div>
           </motion.div>
         </div>
       </section>

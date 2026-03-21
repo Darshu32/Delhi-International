@@ -85,31 +85,31 @@ export default function SiteLayout() {
       </div>
 
       {/* Header */}
-      <header className={`sticky top-0 z-50 transition-all duration-300 border-b ${scrolled ? "bg-navy/95 backdrop-blur-xl shadow-lg shadow-black/10 border-white/10" : "bg-navy border-accent/30"}`}>
+      <header className={`sticky top-0 z-50 transition-all duration-300 border-b ${scrolled ? "bg-white/95 backdrop-blur-xl shadow-lg shadow-black/5 border-border" : "bg-white border-border"}`}>
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between gap-3 h-18 md:h-24">
           <NavLink className="flex items-center gap-3 min-w-0 group" to="/" onClick={() => setMenuOpen(false)}>
-            <span className="w-12 h-12 md:w-14 md:h-14 shrink-0 rounded-xl bg-white/10 border border-white/10 grid place-items-center p-1.5 group-hover:bg-white/15 group-hover:border-accent/30 group-hover:scale-105 transition-all duration-300">
+            <span className="w-12 h-12 md:w-14 md:h-14 shrink-0 rounded-xl bg-surface-dim border border-border grid place-items-center p-1.5 group-hover:border-accent/40 group-hover:scale-105 transition-all duration-300">
               <img className="w-full h-full object-contain" src="./delhi%20logo.png" alt="DIS logo" loading="eager" />
             </span>
             <span className="min-w-0">
-              <strong className="block text-[15px] md:text-lg font-display font-bold leading-tight text-white truncate group-hover:text-accent transition-colors duration-300">Delhi International School</strong>
-              <span className="block text-[11px] md:text-xs text-white/50 leading-tight group-hover:text-white/70 transition-colors duration-300">Shimoga, Karnataka</span>
+              <strong className="block text-[15px] md:text-lg font-display font-bold leading-tight text-text-primary truncate group-hover:text-accent-dark transition-colors duration-300">Delhi International School</strong>
+              <span className="block text-[11px] md:text-xs text-text-muted leading-tight group-hover:text-text-secondary transition-colors duration-300">Shimoga, Karnataka</span>
             </span>
           </NavLink>
 
           <nav className="hidden lg:flex items-center gap-0.5">
             {navLinks.map((link) => (
-              <NavLink key={link.to} to={link.to} className={({ isActive }) => `px-3.5 py-2 rounded-lg text-[13px] font-semibold whitespace-nowrap transition-all duration-200 ${isActive ? "bg-accent text-navy" : link.featured ? "text-accent hover:text-accent-light" : "text-white/70 hover:text-white hover:bg-white/8"}`}>
+              <NavLink key={link.to} to={link.to} className={({ isActive }) => `px-3.5 py-2 rounded-lg text-[14px] font-semibold whitespace-nowrap transition-all duration-200 ${isActive ? "bg-accent text-white" : link.featured ? "text-accent-dark hover:text-accent" : "text-text-secondary hover:text-text-primary hover:bg-surface-muted"}`}>
                 {link.label}
               </NavLink>
             ))}
-            <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="ml-2 px-5 py-2.5 rounded-full bg-accent text-navy text-[13px] font-extrabold hover:bg-accent-light active:scale-95 transition-all shadow-glow">Call Now</a>
+            <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="ml-2 px-5 py-2.5 rounded-full bg-accent text-white text-[14px] font-extrabold hover:bg-accent-dark active:scale-95 transition-all shadow-glow">Call Now</a>
           </nav>
 
-          <button className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px] rounded-lg border border-white/10 bg-white/5 active:bg-white/10 transition-colors" aria-expanded={menuOpen} onClick={() => setMenuOpen((o) => !o)}>
-            <span className={`w-4 h-[1.5px] bg-white rounded-full hamburger-line ${menuOpen ? "translate-y-[6.5px] rotate-45" : ""}`} />
-            <span className={`w-4 h-[1.5px] bg-white rounded-full hamburger-line ${menuOpen ? "opacity-0 scale-x-0" : ""}`} />
-            <span className={`w-4 h-[1.5px] bg-white rounded-full hamburger-line ${menuOpen ? "-translate-y-[6.5px] -rotate-45" : ""}`} />
+          <button className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px] rounded-lg border border-border bg-surface-dim active:bg-surface-muted transition-colors" aria-expanded={menuOpen} onClick={() => setMenuOpen((o) => !o)}>
+            <span className={`w-4 h-[1.5px] bg-text-primary rounded-full hamburger-line ${menuOpen ? "translate-y-[6.5px] rotate-45" : ""}`} />
+            <span className={`w-4 h-[1.5px] bg-text-primary rounded-full hamburger-line ${menuOpen ? "opacity-0 scale-x-0" : ""}`} />
+            <span className={`w-4 h-[1.5px] bg-text-primary rounded-full hamburger-line ${menuOpen ? "-translate-y-[6.5px] -rotate-45" : ""}`} />
           </button>
         </div>
       </header>
@@ -117,16 +117,16 @@ export default function SiteLayout() {
       {/* Mobile Nav */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.nav initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="fixed inset-0 top-18 z-40 bg-navy/98 backdrop-blur-2xl overflow-y-auto lg:hidden">
+          <motion.nav initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="fixed inset-0 top-18 z-40 bg-white/98 backdrop-blur-2xl overflow-y-auto lg:hidden">
             <div className="flex flex-col gap-2 px-4 py-6">
               {navLinks.map((link, i) => (
                 <motion.div key={link.to} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
-                  <NavLink to={link.to} className={({ isActive }) => `flex items-center justify-center w-full min-h-12 px-5 py-3 rounded-2xl text-base font-bold transition-all ${isActive ? "bg-accent text-navy" : link.featured ? "bg-accent/10 text-accent border border-accent/20" : "bg-white/5 text-white border border-white/8"}`} onClick={() => setMenuOpen(false)}>
+                  <NavLink to={link.to} className={({ isActive }) => `flex items-center justify-center w-full min-h-12 px-5 py-3 rounded-2xl text-base font-bold transition-all ${isActive ? "bg-accent text-white" : link.featured ? "bg-accent/10 text-accent-dark border border-accent/20" : "bg-surface-dim text-text-primary border border-border"}`} onClick={() => setMenuOpen(false)}>
                     {link.label}
                   </NavLink>
                 </motion.div>
               ))}
-              <motion.a initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: navLinks.length * 0.04 }} href="tel:9448220170" className="flex items-center justify-center w-full min-h-12 px-5 py-3 rounded-full bg-accent text-navy text-base font-extrabold shadow-glow" onClick={() => setMenuOpen(false)}>Call 9448220170</motion.a>
+              <motion.a initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: navLinks.length * 0.04 }} href="tel:9448220170" className="flex items-center justify-center w-full min-h-12 px-5 py-3 rounded-full bg-accent text-white text-base font-extrabold shadow-glow" onClick={() => setMenuOpen(false)}>Call 9448220170</motion.a>
             </div>
           </motion.nav>
         )}
@@ -219,30 +219,30 @@ export default function SiteLayout() {
       <Outlet />
 
       {/* Map Section */}
-      <section className="bg-navy-light border-t border-white/5">
+      <section className="bg-surface-dim border-t border-border">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-14">
           <div className="grid lg:grid-cols-5 gap-6 items-stretch">
             <div className="lg:col-span-2 flex flex-col justify-center">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-[11px] font-bold text-accent uppercase tracking-wider border border-accent/20 mb-4 w-fit">Find Us</span>
-              <h2 className="font-display text-xl md:text-2xl font-bold text-white leading-tight mb-3">Visit Our Campus</h2>
-              <p className="text-sm text-white/50 leading-relaxed mb-5">Located on Holehonnur Road, Gurupura — easily accessible from all parts of Shimoga. Come see our future-ready campus in person.</p>
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-[11px] font-bold text-accent-dark uppercase tracking-wider border border-accent/20 mb-4 w-fit">Find Us</span>
+              <h2 className="font-display text-xl md:text-2xl font-bold text-text-primary leading-tight mb-3">Visit Our Campus</h2>
+              <p className="text-sm text-text-secondary leading-relaxed mb-5">Located on Holehonnur Road, Gurupura — easily accessible from all parts of Shimoga. Come see our future-ready campus in person.</p>
               <div className="space-y-3 mb-6">
                 <div className="flex items-start gap-3">
                   <span className="w-8 h-8 shrink-0 rounded-full bg-accent/15 grid place-items-center mt-0.5">
-                    <svg className="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    <svg className="w-4 h-4 text-accent-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                   </span>
                   <div>
-                    <p className="text-xs text-white/40 font-medium">Address</p>
-                    <p className="text-sm font-semibold text-white/80">Holehonnur Road, Gurupura, Shimoga, Karnataka</p>
+                    <p className="text-xs text-text-muted font-medium">Address</p>
+                    <p className="text-sm font-semibold text-text-primary">Holehonnur Road, Gurupura, Shimoga, Karnataka</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="w-8 h-8 shrink-0 rounded-full bg-accent/15 grid place-items-center mt-0.5">
-                    <svg className="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <svg className="w-4 h-4 text-accent-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   </span>
                   <div>
-                    <p className="text-xs text-white/40 font-medium">Office Hours</p>
-                    <p className="text-sm font-semibold text-white/80">Mon – Sat, 9:00 AM – 4:00 PM</p>
+                    <p className="text-xs text-text-muted font-medium">Office Hours</p>
+                    <p className="text-sm font-semibold text-text-primary">Mon – Sat, 9:00 AM – 4:00 PM</p>
                   </div>
                 </div>
               </div>
@@ -251,13 +251,13 @@ export default function SiteLayout() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => toast("Opening Google Maps...", "info")}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all w-fit"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-white font-extrabold text-sm shadow-glow hover:bg-accent-dark active:scale-[0.97] transition-all w-fit"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 Get Directions
               </a>
             </div>
-            <div className="lg:col-span-3 rounded-2xl overflow-hidden border border-white/10 shadow-elevated min-h-[300px] md:min-h-[380px]">
+            <div className="lg:col-span-3 rounded-2xl overflow-hidden border border-border shadow-card min-h-[300px] md:min-h-[380px]">
               <iframe
                 title="Delhi International School Location"
                 src="https://maps.google.com/maps?q=Delhi+International+School+Gurupura+Shimoga+Karnataka&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -310,9 +310,9 @@ export default function SiteLayout() {
       </a>
 
       {/* Sticky Mobile CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-navy/95 backdrop-blur-xl border-t border-white/8 px-4 py-3">
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white/95 backdrop-blur-xl border-t border-border px-4 py-3">
         <div className="flex gap-2">
-          <button type="button" onClick={() => setPopupOpen(true)} className="flex-1 min-h-12 flex items-center justify-center gap-2 rounded-full bg-accent text-navy font-extrabold text-[15px] shadow-glow active:scale-[0.97] transition-transform">
+          <button type="button" onClick={() => setPopupOpen(true)} className="flex-1 min-h-12 flex items-center justify-center gap-2 rounded-full bg-accent text-white font-extrabold text-[15px] shadow-glow active:scale-[0.97] transition-transform">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
             Enquire Now
           </button>

@@ -3,13 +3,13 @@ const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0
 export default function CampusPage() {
   return (
     <main>
-      <section className="bg-navy relative overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-green/5 rounded-full blur-[100px] pointer-events-none" />
+      <section className="bg-white relative overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-green/8 rounded-full blur-[100px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-14 md:py-20">
           <motion.div className="max-w-2xl" {...fadeUp}>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green/10 text-[11px] font-bold text-green-light uppercase tracking-wider border border-green/20 mb-4">Campus</span>
-            <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight mb-4">Show the school environment, facilities, and everyday experience with more depth.</h1>
-            <p className="text-sm md:text-base text-white/50 leading-relaxed">This page is prepared for future sections like smart classrooms, labs, safety, transport, sports, and campus imagery.</p>
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green/10 text-[11px] font-bold text-green uppercase tracking-wider border border-green/20 mb-4">Campus</span>
+            <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-4">Show the school environment, facilities, and everyday experience with more depth.</h1>
+            <p className="text-sm md:text-base text-text-secondary leading-relaxed">This page is prepared for future sections like smart classrooms, labs, safety, transport, sports, and campus imagery.</p>
           </motion.div>
         </div>
       </section>
