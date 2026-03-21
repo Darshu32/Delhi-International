@@ -46,8 +46,14 @@ export const admissionsSteps = [
 ];
 
 export const galleryImages = [
-  "https://delhiinternationalshimoga.com/wp-content/uploads/2026/03/WhatsApp-Image-2026-03-11-at-11.20.16-AM-1022x458.jpeg",
-  "https://delhiinternationalshimoga.com/wp-content/uploads/2026/03/WhatsApp-Image-2026-03-11-at-11.20.16-AM-1.jpeg",
-  "https://delhiinternationalshimoga.com/wp-content/uploads/2026/03/WhatsApp-Image-2026-03-11-at-11.20.16-AM-1022x458.jpeg",
-  "https://delhiinternationalshimoga.com/wp-content/uploads/2026/03/WhatsApp-Image-2026-03-11-at-11.20.16-AM-1.jpeg",
+  "./photo%204.jpeg",
+  "./photo%205.jpeg",
+  "./photo%206.jpeg",
+  "./photo%207.jpeg",
+  "./photo%208.jpeg",
+  "./photo%209.jpeg",
+  "./photo%2010.jpeg",
+  "./photo%2011.jpeg",
+  "./photo%2012.jpeg",
+  "./photo%2013.jpeg",
 ];

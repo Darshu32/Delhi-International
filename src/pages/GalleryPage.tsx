@@ -1,3 +1,4 @@
+
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { galleryImages } from "../siteContent";
@@ -6,7 +7,7 @@ import { Lightbox } from "../components/Interactive";
 const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.12 }, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } };
 
 export default function GalleryPage() {
-  const allImages = galleryImages.concat(galleryImages);
+  const allImages = galleryImages;
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState(0);
   const openLightbox = (i: number) => { setLightboxIdx(i); setLightboxOpen(true); };
