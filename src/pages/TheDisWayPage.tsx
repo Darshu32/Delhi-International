@@ -8,9 +8,10 @@ const disWayPrograms = [
   { title: "Student-Led Learning", subtitle: "Reverse Teaching Approach", text: "An interactive learning model where students take the lead in presenting concepts while teachers guide as facilitators, encouraging deeper understanding, confidence, and active participation.", accent: "green", icon: "\uD83C\uDF93" },
   { title: "Confidence & Stage Development", text: "Focused initiatives to eliminate stage fear through regular presentations, activities, and public speaking opportunities, helping students build confidence, a key skill in today's world.", accent: "peach", icon: "\uD83C\uDFA4" },
   { title: "Clubs & Interest-Based Learning", text: "A variety of student clubs designed to nurture talents and interests, providing platforms for creativity, leadership, teamwork, and overall personality development.", accent: "yellow", icon: "\uD83C\uDFC6" },
+  { title: "Education Exploration", text: "Immersive field trips, science exhibitions, and real-world learning journeys that take education beyond the classroom walls. Students visit museums, nature reserves, and innovation hubs to connect textbook concepts with hands-on experiences, sparking curiosity and broadening their understanding of the world.", accent: "sky", icon: "\uD83C\uDF0D" },
 ];
-const accentBg: Record<string, string> = { orange: "from-orange-50 to-amber-50/70", blue: "from-blue-50 to-indigo-50/60", green: "from-emerald-50 to-green-50/60", peach: "from-orange-50/80 to-rose-50/60", yellow: "from-yellow-50 to-amber-50/60" };
-const accentBorder: Record<string, string> = { orange: "hover:border-amber-300", blue: "hover:border-blue-300", green: "hover:border-emerald-300", peach: "hover:border-orange-300", yellow: "hover:border-yellow-300" };
+const accentBg: Record<string, string> = { orange: "from-orange-50 to-amber-50/70", blue: "from-blue-50 to-indigo-50/60", green: "from-emerald-50 to-green-50/60", peach: "from-orange-50/80 to-rose-50/60", yellow: "from-yellow-50 to-amber-50/60", sky: "from-sky-50 to-blue-50/60" };
+const accentBorder: Record<string, string> = { orange: "hover:border-amber-300", blue: "hover:border-blue-300", green: "hover:border-emerald-300", peach: "hover:border-orange-300", yellow: "hover:border-yellow-300", sky: "hover:border-sky-300" };
 
 export default function TheDisWayPage() {
   return (
