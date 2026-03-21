@@ -17,11 +17,11 @@ export default function GalleryPage() {
     <main>
       <section className="bg-navy relative overflow-hidden">
         <div className="absolute top-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-14 md:py-20">
-          <motion.div className="max-w-2xl" {...fadeUp}>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-[11px] font-bold text-accent uppercase tracking-wider border border-accent/20 mb-4">Gallery</span>
-            <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight mb-4">A full visual storytelling page for school life, events, classrooms, and student moments.</h1>
-            <p className="text-sm md:text-base text-white/50 leading-relaxed">When you send final photo groups and captions, this page can become a premium gallery experience without more structural work.</p>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
+          <motion.div className="text-center" {...fadeUp}>
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white leading-[1.05] tracking-tight">
+              Our <span className="text-accent">Gallery</span>
+            </h1>
           </motion.div>
         </div>
       </section>
