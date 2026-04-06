@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-type ToastType = "success" | "info" | "error" | "warning";
+export type ToastType = "success" | "info" | "error" | "warning";
 
 interface Toast {
   id: number;

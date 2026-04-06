@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { admissionsSteps } from "../siteContent";
 import { useToast } from "../components/Toast";
+import { useExternalActions } from "../hooks/useExternalActions";
 
 const fadeUp = { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.12 }, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } };
 
@@ -25,6 +26,7 @@ const faqs = [
 
 export default function AdmissionsPage() {
   const { toast } = useToast();
+  const { announcePhone, openWhatsApp } = useExternalActions();
   const [formData, setFormData] = useState({ studentName: "", parentName: "", phone: "", email: "", grade: "", city: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -75,8 +77,13 @@ export default function AdmissionsPage() {
     if (formData.email) msg += `\n📧 *Email:* ${formData.email.trim()}`;
     if (formData.message) msg += `\n💬 *Message:* ${formData.message.trim()}`;
     msg += `\n\n_Sent from Delhi International School website_`;
-    window.open(`https://wa.me/919448220170?text=${encodeURIComponent(msg)}`, "_blank");
-    toast(activeTab === "visit" ? "Visit request sent! Complete on WhatsApp" : "Enquiry sent! Complete the message on WhatsApp", "success");
+    const opened = openWhatsApp(`https://wa.me/919448220170?text=${encodeURIComponent(msg)}`, {
+      successMessage: activeTab === "visit"
+        ? "WhatsApp opened. Finish sending your campus visit request there."
+        : "WhatsApp opened. Finish sending your enquiry there.",
+      successType: "success",
+    });
+    if (!opened) return;
     setSubmitted(true);
   };
 
@@ -112,7 +119,7 @@ export default function AdmissionsPage() {
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
                 Enquire Now
               </a>
-              <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-surface-dim text-text-primary font-bold text-sm border border-border hover:bg-surface-muted active:scale-[0.97] transition-all">
+              <a href="tel:9448220170" onClick={announcePhone} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-surface-dim text-text-primary font-bold text-sm border border-border hover:bg-surface-muted active:scale-[0.97] transition-all">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                 Call 9448220170
               </a>
@@ -154,7 +161,7 @@ export default function AdmissionsPage() {
                     </span>
                     <div>
                       <p className="text-xs text-white/40 font-medium">Call us</p>
-                      <a href="tel:9448220170" className="text-sm font-bold text-accent hover:text-accent-light transition-colors">+91 94482 20170</a>
+                      <a href="tel:9448220170" onClick={announcePhone} className="text-sm font-bold text-accent hover:text-accent-light transition-colors">+91 94482 20170</a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -223,7 +230,7 @@ export default function AdmissionsPage() {
                       </p>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-2 mt-2">
-                      <a href="tel:9448220170" className="inline-flex items-center justify-center min-h-11 px-6 rounded-full bg-accent text-white font-bold text-sm shadow-glow">Call Now</a>
+                      <a href="tel:9448220170" onClick={announcePhone} className="inline-flex items-center justify-center min-h-11 px-6 rounded-full bg-accent text-white font-bold text-sm shadow-glow">Call Now</a>
                       <button type="button" onClick={resetForm} className="inline-flex items-center justify-center min-h-11 px-6 rounded-full bg-surface-muted text-text-primary font-bold text-sm border border-border hover:bg-surface-dim transition-colors">Submit Another</button>
                     </div>
                   </motion.div>
@@ -389,7 +396,7 @@ export default function AdmissionsPage() {
             <h2 className="font-display text-xl md:text-2xl font-bold leading-tight mb-3">Still have questions? Let's talk.</h2>
             <p className="text-sm text-white/50 mb-6 max-w-lg mx-auto">Our admissions team is happy to help you with any questions about the school, curriculum, fees, or the admission process.</p>
             <div className="flex flex-wrap justify-center gap-3">
-              <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all">
+              <a href="tel:9448220170" onClick={announcePhone} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-navy font-extrabold text-sm shadow-glow hover:bg-accent-light active:scale-[0.97] transition-all">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                 Call 9448220170
               </a>

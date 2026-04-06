@@ -2,8 +2,8 @@ import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { admissionsSteps, galleryImages, programs, stats } from "../siteContent";
-import { useToast } from "../components/Toast";
 import { TiltCard, Counter, Lightbox, GlowCard, ParallaxImage, TextReveal, MagneticWrap } from "../components/Interactive";
+import { useExternalActions } from "../hooks/useExternalActions";
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -22,7 +22,7 @@ function parseStatValue(v: string): { num: number; suffix: string } {
 }
 
 export default function HomePage() {
-  const { toast } = useToast();
+  const { announceEmail, announcePhone } = useExternalActions();
   const allImages = galleryImages;
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState(0);
@@ -263,9 +263,9 @@ export default function HomePage() {
           </motion.div>
           <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12" {...fadeUp}>
             <MagneticWrap>
-              <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-accent text-white font-extrabold text-sm shadow-glow hover:bg-accent-dark transition-all">Call 9448220170</a>
+              <a href="tel:9448220170" onClick={announcePhone} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-accent text-white font-extrabold text-sm shadow-glow hover:bg-accent-dark transition-all">Call 9448220170</a>
             </MagneticWrap>
-            <a href="mailto:admissions@delhiinternationalschool.edu" onClick={() => toast("Opening email client...", "info")} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-white text-text-primary font-bold text-sm border border-border hover:bg-surface-muted transition-all">Request Information</a>
+            <a href="mailto:admissions@delhiinternationalschool.edu" onClick={announceEmail} className="w-full sm:w-auto flex items-center justify-center min-h-12 px-8 rounded-full bg-white text-text-primary font-bold text-sm border border-border hover:bg-surface-muted transition-all">Request Information</a>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-4">
             {admissionsSteps.map((step, i) => (

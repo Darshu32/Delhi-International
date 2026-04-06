@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useToast } from "./Toast";
+import { useExternalActions } from "../hooks/useExternalActions";
 
 const navLinks = [
   { to: "/about", label: "About" },
@@ -15,6 +16,7 @@ const navLinks = [
 
 export default function SiteLayout() {
   const { toast } = useToast();
+  const { announceMaps, announcePhone, openWhatsApp } = useExternalActions();
   const [menuOpen, setMenuOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -23,6 +25,8 @@ export default function SiteLayout() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const location = useLocation();
+  const mapUrl = "https://www.google.com/maps/search/Delhi+International+School+Gurupura+Shimoga";
+  const whatsappIntroUrl = "https://wa.me/919448220170?text=Hi!%20I%20am%20interested%20in%20admission%20at%20Delhi%20International%20School.%20Can%20you%20help%20me?";
 
   useEffect(() => { document.body.classList.toggle("menu-open", menuOpen); return () => document.body.classList.remove("menu-open"); }, [menuOpen]);
   useEffect(() => { setMenuOpen(false); }, [location.pathname]);
@@ -67,8 +71,11 @@ export default function SiteLayout() {
     setTouched({ studentName: true, parentName: true, phone: true, grade: true, city: true });
     if (Object.keys(errs).length > 0) { toast(`Please fix ${Object.keys(errs).length} error(s) in the form`, "error"); return; }
     const msg = `📋 *New Admission Enquiry*\n━━━━━━━━━━━━━━━━━━\n\n👨‍🎓 *Student:* ${formData.studentName.trim()}\n👤 *Parent:* ${formData.parentName.trim()}\n📞 *Phone:* ${formData.phone.trim()}\n🎓 *Grade:* ${formData.grade}\n📍 *City:* ${formData.city.trim()}\n\n_Sent from Delhi International School website_`;
-    window.open(`https://wa.me/919448220170?text=${encodeURIComponent(msg)}`, "_blank");
-    toast("Enquiry sent! Complete the message on WhatsApp", "success");
+    const opened = openWhatsApp(`https://wa.me/919448220170?text=${encodeURIComponent(msg)}`, {
+      successMessage: "WhatsApp opened. Finish sending your enquiry there.",
+      successType: "success",
+    });
+    if (!opened) return;
     setSubmitted(true);
   };
   const inputCls = (name: string) => `w-full min-h-11 px-3.5 rounded-xl border ${errors[name] && touched[name] ? "border-red-400 bg-red-50/50 focus:border-red-500 focus:ring-red-200/50" : "border-border bg-surface-dim focus:border-accent focus:ring-accent/20"} text-text-primary text-sm outline-none focus:ring-2 transition-all placeholder:text-text-muted/50`;
@@ -103,7 +110,7 @@ export default function SiteLayout() {
                 {link.label}
               </NavLink>
             ))}
-            <a href="tel:9448220170" onClick={() => toast("Opening phone dialer...", "info")} className="ml-2 px-5 py-2.5 rounded-full bg-accent text-white text-[14px] font-extrabold hover:bg-accent-dark active:scale-95 transition-all shadow-glow">Call Now</a>
+            <a href="tel:9448220170" onClick={announcePhone} className="ml-2 px-5 py-2.5 rounded-full bg-accent text-white text-[14px] font-extrabold hover:bg-accent-dark active:scale-95 transition-all shadow-glow">Call Now</a>
           </nav>
 
           <button className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px] rounded-lg border border-border bg-surface-dim active:bg-surface-muted transition-colors" aria-expanded={menuOpen} onClick={() => setMenuOpen((o) => !o)}>
@@ -126,7 +133,7 @@ export default function SiteLayout() {
                   </NavLink>
                 </motion.div>
               ))}
-              <motion.a initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: navLinks.length * 0.04 }} href="tel:9448220170" className="flex items-center justify-center w-full min-h-12 px-5 py-3 rounded-full bg-accent text-white text-base font-extrabold shadow-glow" onClick={() => setMenuOpen(false)}>Call 9448220170</motion.a>
+              <motion.a initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: navLinks.length * 0.04 }} href="tel:9448220170" className="flex items-center justify-center w-full min-h-12 px-5 py-3 rounded-full bg-accent text-white text-base font-extrabold shadow-glow" onClick={() => { setMenuOpen(false); announcePhone(); }}>Call 9448220170</motion.a>
             </div>
           </motion.nav>
         )}
@@ -159,7 +166,7 @@ export default function SiteLayout() {
                       <strong className="font-display text-lg text-navy">Thank you for your enquiry.</strong>
                       <p className="text-sm text-text-muted">Our team will connect with you shortly to help with admissions.</p>
                       <div className="flex flex-col sm:flex-row gap-2 mt-2">
-                        <a href="tel:9448220170" className="flex-1 flex items-center justify-center min-h-11 px-5 rounded-full bg-accent text-navy font-bold text-sm shadow-glow">Call 9448220170</a>
+                        <a href="tel:9448220170" onClick={announcePhone} className="flex-1 flex items-center justify-center min-h-11 px-5 rounded-full bg-accent text-navy font-bold text-sm shadow-glow">Call 9448220170</a>
                         <button type="button" onClick={() => setPopupOpen(false)} className="flex-1 flex items-center justify-center min-h-11 px-5 rounded-full bg-surface-muted text-text-primary font-bold text-sm border border-border">Close</button>
                       </div>
                     </div>
@@ -247,10 +254,10 @@ export default function SiteLayout() {
                 </div>
               </div>
               <a
-                href="https://www.google.com/maps/search/Delhi+International+School+Gurupura+Shimoga"
+                href={mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => toast("Opening Google Maps...", "info")}
+                onClick={announceMaps}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-white font-extrabold text-sm shadow-glow hover:bg-accent-dark active:scale-[0.97] transition-all w-fit"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
@@ -283,8 +290,8 @@ export default function SiteLayout() {
               <h2 className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-white leading-tight max-w-lg">Quality CBSE learning with character, confidence, and joy.</h2>
             </div>
             <div className="lg:text-right flex flex-col gap-1.5 text-sm text-white/40">
-              <a href="https://www.google.com/maps/search/Delhi+International+School+Gurupura+Shimoga" target="_blank" rel="noopener noreferrer" className="hover:text-white/60 transition-colors">Holehonnur Road, Gurupura, Shimoga</a>
-              <a href="tel:9448220170" className="text-accent hover:text-accent-light transition-colors font-semibold">+91 9448220170</a>
+              <a href={mapUrl} target="_blank" rel="noopener noreferrer" onClick={announceMaps} className="hover:text-white/60 transition-colors">Holehonnur Road, Gurupura, Shimoga</a>
+              <a href="tel:9448220170" onClick={announcePhone} className="text-accent hover:text-accent-light transition-colors font-semibold">+91 9448220170</a>
             </div>
           </div>
           <div className="mt-8 pt-6 border-t border-white/8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-white/30">
@@ -296,9 +303,13 @@ export default function SiteLayout() {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/919448220170?text=Hi!%20I%20am%20interested%20in%20admission%20at%20Delhi%20International%20School.%20Can%20you%20help%20me?"
+        href={whatsappIntroUrl}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={(e) => {
+          e.preventDefault();
+          openWhatsApp(whatsappIntroUrl, { successMessage: "Opening WhatsApp chat...", successType: "info" });
+        }}
         className="hidden md:flex fixed bottom-6 right-6 z-50 group"
         aria-label="Chat on WhatsApp"
       >
@@ -316,7 +327,7 @@ export default function SiteLayout() {
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
             Enquire Now
           </button>
-          <a href="https://wa.me/919448220170?text=Hi!%20I%20am%20interested%20in%20admission%20at%20Delhi%20International%20School.%20Can%20you%20help%20me?" target="_blank" rel="noopener noreferrer" className="w-12 h-12 shrink-0 flex items-center justify-center rounded-full bg-[#25D366] text-white active:scale-[0.97] transition-transform">
+          <a href={whatsappIntroUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => { e.preventDefault(); openWhatsApp(whatsappIntroUrl, { successMessage: "Opening WhatsApp chat...", successType: "info" }); }} className="w-12 h-12 shrink-0 flex items-center justify-center rounded-full bg-[#25D366] text-white active:scale-[0.97] transition-transform">
             <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           </a>
         </div>
